@@ -46,7 +46,6 @@ seg_grd_1_fit <- segreg_fit(X=X, y=y, th_val = seg_grd_1$th, th_var = X)
 seg_dyn_2_fit <- segreg_fit(X=X, y=y, th_val = seg_dyn_2$th, th_var = X, nthresh = 2)
 seg_grd_2_fit <- segreg_fit(X=X, y=y, th_val = seg_grd_2$th, th_var = X, nthresh = 2)
 
-seg_dyn_1_fit
 seg_grd_1_fit
 
 seg_fit_all <-  list(seg_dyn_1_fit = seg_dyn_1_fit,
@@ -55,6 +54,7 @@ seg_fit_all <-  list(seg_dyn_1_fit = seg_dyn_1_fit,
                      seg_grd_2_fit = seg_grd_2_fit)
 
 
+sapply(seg_fit_all, print)
 sapply(seg_fit_all, deviance)
 sapply(seg_fit_all, coef)
 sapply(seg_fit_all, function(x) coef(summary(x)))

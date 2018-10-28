@@ -18,15 +18,16 @@ segreg_fit <- function(X, y, th_var, nthresh = 1, th_val){
   if(length(th_val)!=nthresh) stop("arg 'th_val' should be of same length as arg 'nthresh")
   th_var <-  as.numeric(th_var)
 
-  X_dat <- prep_X(X=X, th_val=th_val, th_var= th_var, nthresh= nthresh)
+  # X_dat <- prep_X(X=X, th_val=th_val, th_var= th_var, nthresh= nthresh)
+  X_dat <- prep_Xany(X=X, th_val=th_val, th_var= th_var, nthresh= nthresh, clean_names = TRUE)
 
   ## rename
-  X_cols <-  colnames(X)
-  new_cols <- paste(rep(X_cols, times = nthresh),
-                    rep(c("_L", if(nthresh ==2) "_M" else NULL, "_H"), each = length(X_cols)),
-                    sep = "")
-  Xy_dat <-  cbind(y, X_dat)
-  colnames(Xy_dat) <-  c("y", new_cols)
+  # X_cols <-  colnames(X)
+  # new_cols <- paste(rep(X_cols, times = nthresh),
+  #                   rep(c("_L", if(nthresh ==2) "_M" else NULL, "_H"), each = length(X_cols)),
+  #                   sep = "")
+  Xy_dat <-  cbind(y=y, X_dat)
+  colnames(Xy_dat)[1] <-  "y"
 
 
   ## estimate
@@ -41,8 +42,9 @@ coef.seg_reg <-  function(x, by_reg = FALSE) {
   res <- x$coefficient
   if(by_reg) {
     res <- matrix(res, ncol = x$nthresh+1)
-    rownames(res) <- unique(gsub("^`|_L`?$|_M`?$|_H`?$", "",  names(x$coefficient)))
-    colnames(res) <-  c("L", if(x$nthresh==1) NULL else "M", "H")
+    rownames(res) <- unique(gsub("^`|_L`?$|_M`?$|_H`?$|_seg[0-9]{1,2}$", "",  names(x$coefficient)))
+    # colnames(res) <-  c("L", if(x$nthresh==1) NULL else "M", "H")
+    colnames(res) <-  paste("seg", 1:(x$nthresh+1), sep="")
   }
   res
 }
