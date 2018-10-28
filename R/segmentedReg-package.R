@@ -1,4 +1,13 @@
 #' @keywords internal
 "_PACKAGE"
-
-#' This package allows to run a segmented (also known as threshold regression).
+#' foo: A package for computating the notorious bar statistic.
+#'
+#' The foo package provides three categories of important functions:
+#' foo, bar and baz.
+#'
+#' @section Foo functions:
+#' The foo functions ...
+#'
+#' @docType package
+#' @name segmentedReg
+NULL

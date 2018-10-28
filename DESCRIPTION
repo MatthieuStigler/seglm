@@ -1,12 +1,12 @@
 Package: segmentedReg
-Title: What the Package Does (One Line, Title Case)
+Title: Segmented regression
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Matthieu",
+           family = "Stigler",
            role = c("aut", "cre"),
-           email = "first.last@example.com")
-Description: What the package does (one paragraph).
+           email = "Matthieu.Stigler@gmail.com")
+Description: This package computes segmented, also known as threshold regressions. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

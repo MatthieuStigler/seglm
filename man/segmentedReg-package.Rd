@@ -4,12 +4,12 @@
 \name{segmentedReg-package}
 \alias{segmentedReg}
 \alias{segmentedReg-package}
-\title{segmentedReg: What the Package Does (One Line, Title Case)}
+\title{segmentedReg: Segmented regression}
 \description{
-What the package does (one paragraph).
+This package computes segmented, also known as threshold regressions.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com}
+\strong{Maintainer}: Matthieu Stigler \email{Matthieu.Stigler@gmail.com}
 
 }
 \keyword{internal}
