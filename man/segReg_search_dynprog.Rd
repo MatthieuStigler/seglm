@@ -2,9 +2,12 @@
 % Please edit documentation in R/segReg_search.R
 \name{segReg_search_dynprog}
 \alias{segReg_search_dynprog}
+\alias{print.segreg_search}
 \title{Low level function to search the thresholds}
 \usage{
 segReg_search_dynprog(X, y, th_var, th, nthresh = 1, trim = 0.15)
+
+\method{print}{segreg_search}(x, ...)
 }
 \arguments{
 \item{X}{matrix of regressors}
@@ -16,6 +19,8 @@ segReg_search_dynprog(X, y, th_var, th, nthresh = 1, trim = 0.15)
 \item{nthresh}{The number of threshold/breakpoints to estimate.}
 
 \item{trim}{The minimum percentage of observations to keep in each regime.}
+
+\item{x}{object of class \emph{segreg_search}}
 }
 \value{
 An object of class "segreg_search" and "list"
@@ -23,6 +28,14 @@ An object of class "segreg_search" and "list"
 \description{
 Low level function to search the thresholds
 }
+\section{Methods (by generic)}{
+\itemize{
+\item \code{print}: Print method for \code{segreg_search} object
+}}
+
 \examples{
-add(1, 1)
+data_thresh <- sim_thresh()
+X_inp <-  as.matrix(data_thresh[, "x", drop = FALSE])
+y_inp <-  as.matrix(data_thresh[, "y"])
+segReg_search_dynprog(X=X_inp, y=y_inp, th_var = X_inp)
 }

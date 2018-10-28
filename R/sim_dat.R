@@ -9,9 +9,9 @@
 
 sim_thresh <-  function(N = 200, th_val =0) {
   x1 <- rnorm(N)
-  x2 <- rnorm(N)
-  X <-  cbind(x1, x2)
+  # x2 <- rnorm(N)
+  # X <-  cbind(x1, x2)
   D <- ifelse(x1 <= th_val, 1, 0)
-  y <-  1.2 + 0.4 * X *D + 0.8 * X * (1-D) + rnorm(N)
-  data.frame(y=y, x1=x1, x2=x2, regime  = D)
+  y <-  1.2 + 0.4 * x1 *D + 0.8 * x1 * (1-D) + rnorm(N)
+  data.frame(y=y, x = x1, regime  = D)
 }

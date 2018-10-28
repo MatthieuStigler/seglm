@@ -7,21 +7,33 @@
 #' @template param_trim
 #' @return An object of class "segreg_search" and "list"
 #' @examples
-#' add(1, 1)
+#' data_thresh <- sim_thresh()
+#' X_inp <-  as.matrix(data_thresh[, "x", drop = FALSE])
+#' y_inp <-  as.matrix(data_thresh[, "y"])
+#' segReg_search_dynprog(X=X_inp, y=y_inp, th_var = X_inp)
+#' @export
 
-
-
-
+#' @importFrom strucchange breakpoints
 segReg_search_dynprog <- function(X, y, th_var, th, nthresh=1, trim=0.15){
 
-  require(strucchange)
+  if(!requireNamespace("strucchange", quietly = TRUE)) {
+    stop("Package 'strucchange' needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+
+  #
+  y <- as.matrix(y)
+  if(!is.matrix(X)) stop("X should be a matrix")
+  if(is.null(colnames(X))) colnames(X) <- paste("x", 1:ncol(X), sep="_")
+
 
   ##
   N <- nrow(X)
   K <- ncol(X)
   if( (N * (1-2*trim))/(nthresh+1) < K) warning ("N too small")
 
-  y <- as.matrix(y)
+
+
 
   ##
   th_var_order <- order(th_var)
@@ -88,34 +100,10 @@ segReg_search_dynprog <- function(X, y, th_var, th, nthresh=1, trim=0.15){
   res
 }
 
-get_mat_dim <- function(th_var, nthresh=1, trim=0.15){
-
-  th_var_unique <-  sort(unique(th_var))
-
-
-  n_unique <-  length(th_var_unique)
-  n_min <- ceiling(n_unique * trim)
-
-  ##
-  n_unique <-  25
-  n_min <-  5
-
-  num_unique <-  1:n_unique
-  lapply(num_unique, function(x)  (min(x+n_min, n_unique) : n_unique))
-
-
-
-  M <- matrix(NA, n_unique, n_unique)
-  colnames(M) <-  rownames(M) <- th_var_unique
-
-
-  M[1:5, 1:5]
-
-
-}
-
-
-
+#' @inheritParams segReg_search_dynprog
+#' @describeIn segReg_search_dynprog Altenative method
+#' @param iter,max.iter,trace,return_details arguments to set the number of iterations, as well return_details
+#' @export
 segReg_search_grid <- function(X, y, th_var, th, nthresh=1,
                                trim=0.15,
                                iter = TRUE, trace = FALSE, max.iter = 3,
@@ -241,7 +229,11 @@ segReg_search_grid <- function(X, y, th_var, th, nthresh=1,
 }
 
 
-print.segreg_search <-  function(x) {
+
+#' @param x  object of class *segreg_search*
+#' @describeIn segReg_search_dynprog Print method for `segreg_search` object
+#' @export
+print.segreg_search <-  function(x, ...) {
   cat(paste("th:", x$th), "\n")
   cat(paste("SSR:", x$SSR), "\n")
 }
