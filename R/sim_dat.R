@@ -8,11 +8,16 @@
 #' @export
 
 #' @importFrom stats rnorm
-sim_thresh <-  function(N = 200, th_val =0) {
+sim_thresh <-  function(N = 200, th_val =0, output = c("df", "matrix")) {
+
+  output <-  match.arg(output)
+
   x1 <- rnorm(N)
   # x2 <- rnorm(N)
   # X <-  cbind(x1, x2)
   D <- ifelse(x1 <= th_val, 1, 0)
   y <-  1.2 + 0.4 * x1 *D + 0.8 * x1 * (1-D) + rnorm(N)
-  data.frame(y=y, x = x1, regime  = D)
+  res <- data.frame(y=y, x = x1, regime  = D)
+  if(output == "matrix") res <- as.matrix(res)
+  res
 }

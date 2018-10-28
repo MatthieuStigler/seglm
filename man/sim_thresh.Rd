@@ -4,7 +4,7 @@
 \alias{sim_thresh}
 \title{Simulation of data for example}
 \usage{
-sim_thresh(N = 200, th_val = 0)
+sim_thresh(N = 200, th_val = 0, output = c("df", "matrix"))
 }
 \arguments{
 \item{N}{Size of sample to simulate}
