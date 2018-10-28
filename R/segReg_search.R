@@ -2,10 +2,13 @@
 #'
 #' @param X matrix of regressors
 #' @param y matrix of the response
+#' @param th_var the threshold variable.
+#' @param nthresh the number of threshold/segemntation pints to search for
+#' @trim The trimming parameter
 #' @return An object of class "segreg_search" and "list"
 #' @examples
 #' add(1, 1)
-#' add(10, 1)
+
 
 
 
