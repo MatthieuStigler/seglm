@@ -15,7 +15,8 @@
 #' @export
 
 #' @importFrom strucchange breakpoints
-segReg_search_dynprog <- function(X, y, th_var, th, nthresh=1, trim=0.15){
+#' @importFrom stats reformulate lm lm.fit
+segReg_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15){
 
   if(!requireNamespace("strucchange", quietly = TRUE)) {
     stop("Package 'strucchange' needed for this function to work. Please install it.",
@@ -65,16 +66,17 @@ segReg_search_dynprog <- function(X, y, th_var, th, nthresh=1, trim=0.15){
   n_min <- max(ceiling(trim*n_th), K+1)
 
   # fixInNamespace(breakpoints.formula, "strucchange")
-  br_first <- breakpoints(formula = formu, data=Xy, breaks=nthresh, h= NULL)
-  br <- breakpoints(br_first, breaks=nthresh)
+  br_first <- strucchange::breakpoints(formula = formu, data=Xy, breaks=nthresh, h= NULL)
+  br <- strucchange::breakpoints(br_first, breaks=nthresh)
   br_points <- br$breakpoints
   if(all(is.na(br_points))) warning("br is NA")
 
   RSS.table <- as.data.frame(br_first$RSS.table) %>% as_tibble()
   RSS.table$is_min <- if(nthresh == 1) {
-    RSS.table$index == br_points
+    RSS.table[,"index"] == br_points
   } else if(nthresh == 2) {
-    RSS.table$break1 == br_points[1] & RSS.table$break2 == br_points[2] | RSS.table$break1 == br_points[2] & RSS.table$break2 == br_points[1]
+    RSS.table$break1 == br_points[1] & RSS.table["break2"] == br_points[2] | RSS.table["break1"] == br_points[2] &
+      RSS.table["break2"] == br_points[1]
   }
 
   if(nthresh == 1) {
@@ -105,7 +107,8 @@ segReg_search_dynprog <- function(X, y, th_var, th, nthresh=1, trim=0.15){
 #' @rdname segReg_search_dynprog
 #' @param iter,max.iter,trace,return_details arguments to set the number of iterations, as well return_details
 #' @export
-segReg_search_grid <- function(X, y, th_var, th, nthresh=1,
+#' @import dplyr
+segReg_search_grid <- function(X, y, th_var, nthresh=1,
                                trim=0.15,
                                iter = TRUE, trace = FALSE, max.iter = 3,
                                return_details = FALSE){
@@ -134,7 +137,7 @@ segReg_search_grid <- function(X, y, th_var, th, nthresh=1,
   # n_in <- length(allin)
   # if(n_in/nthresh < K) warning("Data too small/trim too large")
 
-  SSR_XY <-  SSR_1value <-  function(X, y) {
+  SSR_XY <-  function(X, y) {
     c(crossprod(lm.fit(X, y)$residuals))
   }
 
@@ -232,6 +235,7 @@ segReg_search_grid <- function(X, y, th_var, th, nthresh=1,
 
 
 #' @param x  object of class *segreg_search*
+#' @param ... unused
 #' @rdname segReg_search_dynprog
 #' @export
 print.segreg_search <-  function(x, ...) {

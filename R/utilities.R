@@ -1,3 +1,6 @@
+
+#' @importFrom stats model.matrix
+
 prep_X <-  function(X, th_val, th_var, nthresh) {
   if(nthresh == 1) {
     indic <-  ifelse(th_var <= th_val, 1, 0)
