@@ -10,6 +10,8 @@ sim_thresh(N = 200, th_val = 0, output = c("df", "matrix"))
 \item{N}{Size of sample to simulate}
 
 \item{th_val}{The pre-specified threshold/breakpoints values.}
+
+\item{output}{whether to return a \emph{data.frame} or \emph{matrix}}
 }
 \value{
 A data frame with columns \emph{y}, \emph{x1} and \emph{x2}
