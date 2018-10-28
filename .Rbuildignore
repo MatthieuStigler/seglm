@@ -2,3 +2,4 @@
 ^LICENSE\.md$
 ^segmentedReg\.Rproj$
 ^\.Rproj\.user$
+man-roxygen/*
