@@ -4,6 +4,7 @@
 \alias{segReg_search_dynprog}
 \alias{segReg_search_grid}
 \alias{print.segreg_search}
+\alias{deviance.segreg_search}
 \title{Low level function to search the thresholds}
 \usage{
 segReg_search_dynprog(X, y, th_var, nthresh = 1, trim = 0.15)
@@ -12,6 +13,8 @@ segReg_search_grid(X, y, th_var, nthresh = 1, trim = 0.15,
   iter = TRUE, trace = FALSE, max.iter = 3, return_details = FALSE)
 
 \method{print}{segreg_search}(x, ...)
+
+\method{deviance}{segreg_search}(object, ...)
 }
 \arguments{
 \item{X}{matrix of regressors}
@@ -29,6 +32,8 @@ segReg_search_grid(X, y, th_var, nthresh = 1, trim = 0.15,
 \item{x}{object of class \emph{segreg_search}}
 
 \item{...}{unused}
+
+\item{object}{object of class \emph{segreg_search}}
 }
 \value{
 An object of class "segreg_search" and "list"

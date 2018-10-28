@@ -81,11 +81,11 @@ segReg_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15){
 
   if(nthresh == 1) {
     RSS.table <-  RSS.table %>%
-      mutate(th = th_var[th_var_order[index]])
+      mutate(th = th_var[th_var_order[.data$index]])
   } else if (nthresh == 2) {
     RSS.table <-  RSS.table %>%
-      mutate(th1 = th_var[th_var_order[break1]],
-             th2 = th_var[th_var_order[break2]])
+      mutate(th1 = th_var[th_var_order[.data$break1]],
+             th2 = th_var[th_var_order[.data$break2]])
 
   }
   #   mutate(th = th_var[th_var_order[index]]) %>%
@@ -243,3 +243,9 @@ print.segreg_search <-  function(x, ...) {
   cat(paste("SSR:", x$SSR), "\n")
 }
 
+#' @param object  object of class *segreg_search*
+#' @rdname segReg_search_dynprog
+#' @export
+deviance.segreg_search <-  function(object, ...) {
+  object$SSR
+}
