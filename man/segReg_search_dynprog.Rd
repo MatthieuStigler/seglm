@@ -13,7 +13,9 @@ segReg_search_dynprog(X, y, th_var, th, nthresh = 1, trim = 0.15)
 
 \item{th_var}{the threshold variable.}
 
-\item{nthresh}{the number of threshold/segemntation pints to search for}
+\item{nthresh}{The number of threshold/breakpoints to estimate.}
+
+\item{trim}{The minimum percentage of observations to keep in each regime.}
 }
 \value{
 An object of class "segreg_search" and "list"
