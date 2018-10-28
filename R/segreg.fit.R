@@ -1,21 +1,34 @@
-
+#' Low level function to estimate a segmented/threshold regression by pre-specifying the threshold values
+#'
+#' @param X matrix of regressors
+#' @param y matrix of the response
+#' @template param_th_var
+#' @template param_th_val
+#' @template param_nthresh
+#' @return An object of class "seg_reg" and "lm"
+#' @examples
+#' data_thresh <- sim_thresh()
+#' X_inp <-  as.matrix(data_thresh[, "x", drop = FALSE])
+#' y_inp <-  as.matrix(data_thresh[, "y"])
+#' segreg_fit(X=X_inp, y=y_inp, th_var = X_inp, th_val = 0)
+#' @export
 
 segreg_fit <- function(X, y, th_var, nthresh = 1, th_val){
-  
+
   if(length(th_val)!=nthresh) stop("arg 'th_val' should be of same length as arg 'nthresh")
   th_var <-  as.numeric(th_var)
-  
+
   X_dat <- prep_X(X=X, th_val=th_val, th_var= th_var, nthresh= nthresh)
-  
+
   ## rename
   X_cols <-  colnames(X)
   new_cols <- paste(rep(X_cols, times = nthresh),
-                    rep(c("_L", if(nthresh ==2) "_M" else NULL, "_H"), each = length(X_cols)), 
+                    rep(c("_L", if(nthresh ==2) "_M" else NULL, "_H"), each = length(X_cols)),
                     sep = "")
   Xy_dat <-  cbind(y, X_dat)
   colnames(Xy_dat) <-  c("y", new_cols)
-  
-  
+
+
   ## estimate
   res <-  lm(y~. - 1, data = as.data.frame(Xy_dat))
   res$th_val <-  th_val
@@ -30,11 +43,15 @@ coef.seg_reg <-  function(x, by_reg = FALSE) {
     res <- matrix(res, ncol = x$nthresh+1)
     rownames(res) <- unique(gsub("^`|_L`?$|_M`?$|_H`?$", "",  names(x$coefficient)))
     colnames(res) <-  c("L", if(x$nthresh==1) NULL else "M", "H")
-  } 
+  }
   res
 }
 
-print.seg_reg <-  function(x) {
+#' @param x  object of class *seg_reg*
+#' @param ... unused
+#' @rdname segreg_fit
+#' @export
+print.seg_reg <-  function(x, ...) {
   cat("Coefs:\n")
   print(coef.seg_reg(x, by_reg = TRUE))
   cat("\nThreshold:", x$th_val)
@@ -58,58 +75,58 @@ print.seg_reg <-  function(x) {
 # }
 
 if(FALSE){
-  
+
   # library(strucchange)
   library(tidyverse)
   lag <-  stats:::lag
-  
-  
+
+
   ## prepare data
   X <- freeny.x
   Xint <- cbind(int = 1, X)
   Y <- freeny.y
   th <- freeny.x[, "price index", drop=FALSE]
-  
+
   # dupli
   sort(th)[5:7]
   sort(th)[duplicated(sort(th))]
   order(th)
   Xint[order(th),]
-  
-  
+
+
   ## search
   seg_gr_1 <- segReg_search_grid(X=Xint, y= Y, th_var = th)
   seg_gr_2 <- segReg_search_grid(Xint, Y, th, nthresh = 2, trace = TRUE)
   seg_dyn_1 <- segReg_search_dynprog(Xint, Y, th, nthresh=1)
   seg_dyn_2 <- segReg_search_dynprog(Xint, Y, th, nthresh=2)
-  
-  
-  
-  
+
+
+
+
   ## check out: 1 nthresh
   seg_gr_1
   seg_dyn_1
   segreg_fit(X=X, y=Y, th_val = seg_gr_1$th, th_var = th) %>%  deviance
-  
+
   ## check out: 1 nthresh
   seg_gr_2
   seg_dyn_2
   segreg_fit(X, Y, th_val = seg_gr_2$th, nthresh = 2, th_var = th) %>%  deviance
   segreg_fit(X, Y, th_val = seg_dyn_2$th, nthresh = 2, th_var = th) %>%  deviance
-  
+
   ###
   out_1 <- segreg_fit(X, y = Y, th_val = seg_gr_1$th, nthresh = 1, th_var = th)
   out_2 <- segreg_fit(X, y = Y, th_val = seg_gr_2$th, nthresh = 2, th_var = th)
-  
+
   out_1
   out_2
-  
+
   summary(out_1)
   summary(out_2)
-  
+
   coef(x=out_1, by_reg=TRUE)
   coef(out_2, by_reg=TRUE)
-  
+
   #
   example(breakpoints, echo=FALSE)
   bp.seat <- breakpoints(y ~ ylag1 + ylag12, data = seatbelt, h = 0.1, breaks = 5)
@@ -126,7 +143,7 @@ if(FALSE){
   summary(b)
   segReg_search_dynprog(X=freeny.x, y = freeny.y, thVar = freeny.x[, "price index", drop=FALSE],
                      nthresh=1)
-  
+
   ## quick lm check
   library(broom)
   freeny %>%
@@ -138,25 +155,25 @@ if(FALSE){
     select(regime, term, estimate) %>%
     spread(term, estimate) %>%
     print(digits=4)
-  
+
   a$coefficients %>%
     matrix(nrow=2, byrow=TRUE)
-  
+
   a$th
   plot(a)
   plot(a, type=2, var=3)
   deviance(a)
   a$thGrid[which.min(a$thGrid$SSR),]
   crossprod(residuals(a))
-  
+
   cbind(freeny.x[,"price index"], a$model[,c(3,7)])
-  
+
   ## join=TRUE
   aa <- segReg.fit(X=cbind(1, freeny.x[,2, drop=FALSE]),
                    y=freeny.y, thVar="price index", trim=0.15, join=TRUE)
   plot(aa, type=2, var=3)
-  
-  
+
+
   ## time series example:
   b <- segReg.fit(X=freeny.x[, "price index", drop=FALSE],
                   y=freeny.y, thVar=1:nrow(freeny), trim=0.15)
@@ -167,22 +184,22 @@ if(FALSE){
   lm(freeny.y~freeny.x-1)
   fr <- as.matrix(freeny.y)
   breakpoints(fr~freeny.x, h=0.2)
-  
+
   br <- breakpoints(y~price.index-1,data=freeny, h=0.15, breaks=2)
   br$breakpoints
-  
-  ## use breakpoints for 
+
+  ## use breakpoints for
   X <- freeny.x[, "price index", drop=FALSE]
   y <- freeny.y
-  thVar <- X 
+  thVar <- X
   Xy <- cbind(X,y)[order(X),]
   br <- breakpoints(y~X, data=as.data.frame(Xy), breaks=2, h = 0.15)
   br$breakpoints
   Xy[27,]
   a$th
-  
-  ##
-  
 
-  
+  ##
+
+
+
 }
