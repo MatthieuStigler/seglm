@@ -2,10 +2,14 @@
 % Please edit documentation in R/segReg_search.R
 \name{segReg_search_dynprog}
 \alias{segReg_search_dynprog}
+\alias{segReg_search_grid}
 \alias{print.segreg_search}
 \title{Low level function to search the thresholds}
 \usage{
 segReg_search_dynprog(X, y, th_var, th, nthresh = 1, trim = 0.15)
+
+segReg_search_grid(X, y, th_var, th, nthresh = 1, trim = 0.15,
+  iter = TRUE, trace = FALSE, max.iter = 3, return_details = FALSE)
 
 \method{print}{segreg_search}(x, ...)
 }
@@ -20,6 +24,8 @@ segReg_search_dynprog(X, y, th_var, th, nthresh = 1, trim = 0.15)
 
 \item{trim}{The minimum percentage of observations to keep in each regime.}
 
+\item{iter, max.iter, trace, return_details}{arguments to set the number of iterations, as well return_details}
+
 \item{x}{object of class \emph{segreg_search}}
 }
 \value{
@@ -28,14 +34,10 @@ An object of class "segreg_search" and "list"
 \description{
 Low level function to search the thresholds
 }
-\section{Methods (by generic)}{
-\itemize{
-\item \code{print}: Print method for \code{segreg_search} object
-}}
-
 \examples{
 data_thresh <- sim_thresh()
 X_inp <-  as.matrix(data_thresh[, "x", drop = FALSE])
 y_inp <-  as.matrix(data_thresh[, "y"])
 segReg_search_dynprog(X=X_inp, y=y_inp, th_var = X_inp)
+segReg_search_grid(X=X_inp, y=y_inp, th_var = X_inp)
 }

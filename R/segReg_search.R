@@ -11,6 +11,7 @@
 #' X_inp <-  as.matrix(data_thresh[, "x", drop = FALSE])
 #' y_inp <-  as.matrix(data_thresh[, "y"])
 #' segReg_search_dynprog(X=X_inp, y=y_inp, th_var = X_inp)
+#' segReg_search_grid(X=X_inp, y=y_inp, th_var = X_inp)
 #' @export
 
 #' @importFrom strucchange breakpoints
@@ -100,8 +101,8 @@ segReg_search_dynprog <- function(X, y, th_var, th, nthresh=1, trim=0.15){
   res
 }
 
-#' @inheritParams segReg_search_dynprog
-#' @describeIn segReg_search_dynprog Altenative method
+#' @inheritParams  segReg_search_dynprog
+#' @rdname segReg_search_dynprog
 #' @param iter,max.iter,trace,return_details arguments to set the number of iterations, as well return_details
 #' @export
 segReg_search_grid <- function(X, y, th_var, th, nthresh=1,
@@ -231,7 +232,7 @@ segReg_search_grid <- function(X, y, th_var, th, nthresh=1,
 
 
 #' @param x  object of class *segreg_search*
-#' @describeIn segReg_search_dynprog Print method for `segreg_search` object
+#' @rdname segReg_search_dynprog
 #' @export
 print.segreg_search <-  function(x, ...) {
   cat(paste("th:", x$th), "\n")
