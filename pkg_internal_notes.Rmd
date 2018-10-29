@@ -1,0 +1,46 @@
+---
+title: "Package internal implementation notes"
+author: "Matthieu"
+date: "October 28, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Notes
+...
+
+
+## To do
+
+### Short term
+
+* correct mismatch grid/dynprog
+* add third method:  grid with recresid, much faster!
+* understand effect of ordering over threshold then use structural break techniques
+* rename functions, needs consistency
+* see potential of other packages, and other methods (penalized regression)
+* push to github
+* clean utilities.R some not used anymore
+
+### Further functions:
+
+* `segreg_lm()` "workhorse" function
+* add function `regime()`
+* `predict()`: option to feed raw data, transform then
+* broom/tidy implementation: 
+    - `augment()`: add `regime()`?
+    - `tidy()` add threshold
+* Hansen `confint()`
+* Handle variables with no switch!?
+    
+## Long term functionalitites to add:
+
+* shrinkage methodd for threshold
+* bootstrap? look at new paradigms...
+* Linton Seo (look at `nls()` and partially linear LS literature ) 
+* Greb shrinkage stuff. 
+* Generalized grid search for `glm()`, or any. Look at Seo JASA paper!
+
