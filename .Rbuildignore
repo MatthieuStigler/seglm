@@ -1,5 +1,5 @@
 ^README\.Rmd$
 ^LICENSE\.md$
-^segmentedReg\.Rproj$
+^seglm\.Rproj$
 ^\.Rproj\.user$
 man-roxygen/*

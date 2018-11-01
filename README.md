@@ -1,9 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-segmentedReg
-============
+seglm
+=====
 
-The goal of segmentedReg is to do a segemtned regression
+The goal of seglm is to do a segmented regression, also ca
 
 Installation
 ------------
@@ -11,7 +11,7 @@ Installation
 todo
 
 ``` r
-install.packages("segmentedReg")
+install.packages("seglm")
 ```
 
 Example

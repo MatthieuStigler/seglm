@@ -1,4 +1,4 @@
 library(testthat)
-library(segmentedReg)
+library(seglm)
 
-test_check("segmentedReg")
+test_check("seglm")

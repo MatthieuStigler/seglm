@@ -5,15 +5,15 @@
 #' @template param_th_var
 #' @template param_th_val
 #' @template param_nthresh
-#' @return An object of class "seg_reg" and "lm"
+#' @return An object of class "seglm" and "lm"
 #' @examples
 #' data_thresh <- sim_thresh()
 #' X_inp <-  as.matrix(data_thresh[, "x", drop = FALSE])
 #' y_inp <-  as.matrix(data_thresh[, "y"])
-#' segreg_fit(X=X_inp, y=y_inp, th_var = X_inp, th_val = 0)
+#' seglm_fit(X=X_inp, y=y_inp, th_var = X_inp, th_val = 0)
 #' @export
 
-segreg_fit <- function(X, y, th_var, nthresh = 1, th_val){
+seglm_fit <- function(X, y, th_var, nthresh = 1, th_val){
 
   if(length(th_val)!=nthresh) stop("arg 'th_val' should be of same length as arg 'nthresh")
   th_var <-  as.numeric(th_var)
@@ -34,11 +34,11 @@ segreg_fit <- function(X, y, th_var, nthresh = 1, th_val){
   res <-  lm(y~. - 1, data = as.data.frame(Xy_dat))
   res$th_val <-  th_val
   res$nthresh <- nthresh
-  class(res) <-  c("seg_reg", "lm")
+  class(res) <-  c("seglm", "lm")
   res
 }
 
-coef.seg_reg <-  function(x, by_reg = FALSE) {
+coef.seglm <-  function(x, by_reg = FALSE) {
   res <- x$coefficient
   if(by_reg) {
     res <- matrix(res, ncol = x$nthresh+1)
@@ -49,13 +49,13 @@ coef.seg_reg <-  function(x, by_reg = FALSE) {
   res
 }
 
-#' @param x  object of class *seg_reg*
+#' @param x  object of class *seglm*
 #' @param ... unused
-#' @rdname segreg_fit
+#' @rdname seglm_fit
 #' @export
-print.seg_reg <-  function(x, ...) {
+seglm <-  function(x, ...) {
   cat("Coefs:\n")
-  print(coef.seg_reg(x, by_reg = TRUE))
+  print(coef.seglm(x, by_reg = TRUE))
   cat("\nThreshold:", x$th_val)
 }
 
@@ -97,10 +97,10 @@ if(FALSE){
 
 
   ## search
-  seg_gr_1 <- segReg_search_grid(X=Xint, y= Y, th_var = th)
-  seg_gr_2 <- segReg_search_grid(Xint, Y, th, nthresh = 2, trace = TRUE)
-  seg_dyn_1 <- segReg_search_dynprog(Xint, Y, th, nthresh=1)
-  seg_dyn_2 <- segReg_search_dynprog(Xint, Y, th, nthresh=2)
+  seg_gr_1 <- seglm_search_grid(X=Xint, y= Y, th_var = th)
+  seg_gr_2 <- seglm_search_grid(Xint, Y, th, nthresh = 2, trace = TRUE)
+  seg_dyn_1 <- seglm_search_dynprog(Xint, Y, th, nthresh=1)
+  seg_dyn_2 <- seglm_search_dynprog(Xint, Y, th, nthresh=2)
 
 
 
@@ -108,17 +108,17 @@ if(FALSE){
   ## check out: 1 nthresh
   seg_gr_1
   seg_dyn_1
-  segreg_fit(X=X, y=Y, th_val = seg_gr_1$th, th_var = th) %>%  deviance
+  seglm_fit(X=X, y=Y, th_val = seg_gr_1$th, th_var = th) %>%  deviance
 
   ## check out: 1 nthresh
   seg_gr_2
   seg_dyn_2
-  segreg_fit(X, Y, th_val = seg_gr_2$th, nthresh = 2, th_var = th) %>%  deviance
-  segreg_fit(X, Y, th_val = seg_dyn_2$th, nthresh = 2, th_var = th) %>%  deviance
+  seglm_fit(X, Y, th_val = seg_gr_2$th, nthresh = 2, th_var = th) %>%  deviance
+  seglm_fit(X, Y, th_val = seg_dyn_2$th, nthresh = 2, th_var = th) %>%  deviance
 
   ###
-  out_1 <- segreg_fit(X, y = Y, th_val = seg_gr_1$th, nthresh = 1, th_var = th)
-  out_2 <- segreg_fit(X, y = Y, th_val = seg_gr_2$th, nthresh = 2, th_var = th)
+  out_1 <- seglm_fit(X, y = Y, th_val = seg_gr_1$th, nthresh = 1, th_var = th)
+  out_2 <- seglm_fit(X, y = Y, th_val = seg_gr_2$th, nthresh = 2, th_var = th)
 
   out_1
   out_2
@@ -135,15 +135,15 @@ if(FALSE){
   breakpoints(bp.seat, breaks=2)
   bp.seat
   ## methods
-  a <- segReg.fit(X=Xint, y=Y, thVar="price index", trim=0.15)
+  a <- seglm.fit(X=Xint, y=Y, thVar="price index", trim=0.15)
   a$th
   as_data_frame(a$thGrid)
-  b <- segReg_search_dynprog(X=X, y = Y, thVar = th, nthresh=1)
+  b <- seglm_search_dynprog(X=X, y = Y, thVar = th, nthresh=1)
   # b$breakpoint$extract.breaks(b$breakpoint$RSS.table, breaks= 1)
   b$th
   b$RSS.table
   summary(b)
-  segReg_search_dynprog(X=freeny.x, y = freeny.y, thVar = freeny.x[, "price index", drop=FALSE],
+  seglm_search_dynprog(X=freeny.x, y = freeny.y, thVar = freeny.x[, "price index", drop=FALSE],
                      nthresh=1)
 
   ## quick lm check
@@ -171,13 +171,13 @@ if(FALSE){
   cbind(freeny.x[,"price index"], a$model[,c(3,7)])
 
   ## join=TRUE
-  aa <- segReg.fit(X=cbind(1, freeny.x[,2, drop=FALSE]),
+  aa <- seglm.fit(X=cbind(1, freeny.x[,2, drop=FALSE]),
                    y=freeny.y, thVar="price index", trim=0.15, join=TRUE)
   plot(aa, type=2, var=3)
 
 
   ## time series example:
-  b <- segReg.fit(X=freeny.x[, "price index", drop=FALSE],
+  b <- seglm.fit(X=freeny.x[, "price index", drop=FALSE],
                   y=freeny.y, thVar=1:nrow(freeny), trim=0.15)
   b$th
   plot(b)

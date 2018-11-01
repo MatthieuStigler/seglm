@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Further functions:
 
-* `segreg_lm()` "workhorse" function
+* `seglm_lm()` "workhorse" function
 * add function `regime()`
 * `predict()`: option to feed raw data, transform then
 * broom/tidy implementation: 

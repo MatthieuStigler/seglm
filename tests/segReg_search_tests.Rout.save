@@ -1,5 +1,5 @@
 
-R version 3.5.1 (2018-07-02) -- "Feather Spray"
+R version 3.4.4 (2018-03-15) -- "Someone to Lean On"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -17,7 +17,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> library(segmentedReg)
+> library(seglm)
 > 
 > set.seed(123)
 > data_thresh <- sim_thresh()
@@ -25,11 +25,11 @@ Type 'q()' to quit R.
 > y <-  as.matrix(data_thresh[, "y"])
 > 
 > ## 1 th
-> seg_dyn_1 <- segReg_search_dynprog(X=X, y=y, th_var = X)
-> seg_grd_1 <- segReg_search_grid(X=X, y=y, th_var = X)
+> seg_dyn_1 <- seglm_search_dynprog(X=X, y=y, th_var = X)
+> seg_grd_1 <- seglm_search_grid(X=X, y=y, th_var = X)
 > 
-> seg_dyn_1_tr <- segReg_search_dynprog(X=X, y=y, th_var = X, trim = 0.1)
-> seg_grd_1_tr <- segReg_search_grid(X=X, y=y, th_var = X, trim = 0.1)
+> seg_dyn_1_tr <- seglm_search_dynprog(X=X, y=y, th_var = X, trim = 0.1)
+> seg_grd_1_tr <- seglm_search_grid(X=X, y=y, th_var = X, trim = 0.1)
 > 
 > seg_dyn_1
 th: -0.0619117105767217 
@@ -46,8 +46,8 @@ th: 0.0652930335253153
 SSR: 279.101158005311 
 > 
 > ## 2 th
-> seg_dyn_2 <- segReg_search_dynprog(X=X, y=y, th_var = X, nthresh = 2)
-> seg_grd_2 <- segReg_search_grid(X=X, y=y, th_var = X, nthresh = 2)
+> seg_dyn_2 <- seglm_search_dynprog(X=X, y=y, th_var = X, nthresh = 2)
+> seg_grd_2 <- seglm_search_grid(X=X, y=y, th_var = X, nthresh = 2)
 > 
 > seg_dyn_2
 th: -0.235700359100477 th: 0.0652930335253153 
@@ -70,24 +70,28 @@ SSR: 236.341878981821
           NA           NA           NA     279.1012     236.3419     279.1012 
 > 
 > ## trace
-> seg_grid_2 <- segReg_search_grid(X=X, y=y, th_var = X, nthresh = 2, trace = TRUE)
+> seg_grid_2 <- seglm_search_grid(X=X, y=y, th_var = X, nthresh = 2, trace = TRUE)
 Best for nthresh=1: 0.06529303 
 Best for nthresh=2, given th =  0.06529303 : -0.445662 
 Best for nthresh=2, iter 1 given th =  -0.445662 : 0.06529303 . Converged, exit iteration, 
 > 
 > ## fit
-> seg_dyn_1_fit <- segreg_fit(X=X, y=y, th_val = seg_dyn_1$th, th_var = X)
-> seg_grd_1_fit <- segreg_fit(X=X, y=y, th_val = seg_grd_1$th, th_var = X)
+> seg_dyn_1_fit <- seglm_fit(X=X, y=y, th_val = seg_dyn_1$th, th_var = X)
+> seg_grd_1_fit <- seglm_fit(X=X, y=y, th_val = seg_grd_1$th, th_var = X)
 > 
-> seg_dyn_2_fit <- segreg_fit(X=X, y=y, th_val = seg_dyn_2$th, th_var = X, nthresh = 2)
-> seg_grd_2_fit <- segreg_fit(X=X, y=y, th_val = seg_grd_2$th, th_var = X, nthresh = 2)
+> seg_dyn_2_fit <- seglm_fit(X=X, y=y, th_val = seg_dyn_2$th, th_var = X, nthresh = 2)
+> seg_grd_2_fit <- seglm_fit(X=X, y=y, th_val = seg_grd_2$th, th_var = X, nthresh = 2)
 > 
 > seg_grd_1_fit
-Coefs:
-        seg1     seg2
-x -0.8662471 1.803278
 
-Threshold: 0.06529303> 
+Call:
+lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
+
+Coefficients:
+ x_seg1   x_seg2  
+-0.8662   1.8033  
+
+> 
 > seg_fit_all <-  list(seg_dyn_1_fit = seg_dyn_1_fit,
 +                      seg_dyn_2_fit = seg_dyn_2_fit,
 +                      seg_grd_1_fit = seg_grd_1_fit,
@@ -95,34 +99,53 @@ Threshold: 0.06529303>
 > 
 > 
 > sapply(seg_fit_all, print)
-Coefs:
-        seg1     seg2
-x -0.8639384 1.800775
 
-Threshold: -0.06191171Coefs:
-        seg1      seg2     seg3
-x -0.8221864 -9.861262 1.803278
+Call:
+lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
 
-Threshold: -0.2357004 0.06529303Coefs:
-        seg1     seg2
-x -0.8662471 1.803278
+Coefficients:
+ x_seg1   x_seg2  
+-0.8639   1.8008  
 
-Threshold: 0.06529303Coefs:
-        seg1      seg2     seg3
-x -0.7288264 -4.685082 1.803278
 
-Threshold: -0.445662 0.06529303$seg_dyn_1_fit
-NULL
+Call:
+lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
 
-$seg_dyn_2_fit
-NULL
+Coefficients:
+ x_seg1   x_seg2   x_seg3  
+-0.8222  -9.8613   1.8033  
 
-$seg_grd_1_fit
-NULL
 
-$seg_grd_2_fit
-NULL
+Call:
+lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
 
+Coefficients:
+ x_seg1   x_seg2  
+-0.8662   1.8033  
+
+
+Call:
+lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
+
+Coefficients:
+ x_seg1   x_seg2   x_seg3  
+-0.7288  -4.6851   1.8033  
+
+              seg_dyn_1_fit seg_dyn_2_fit seg_grd_1_fit seg_grd_2_fit
+coefficients  Numeric,2     Numeric,3     Numeric,2     Numeric,3    
+residuals     Numeric,200   Numeric,200   Numeric,200   Numeric,200  
+effects       Numeric,200   Numeric,200   Numeric,200   Numeric,200  
+rank          2             3             2             3            
+fitted.values Numeric,200   Numeric,200   Numeric,200   Numeric,200  
+assign        Integer,2     Integer,3     Integer,2     Integer,3    
+qr            List,5        List,5        List,5        List,5       
+df.residual   198           197           198           197          
+xlevels       List,0        List,0        List,0        List,0       
+call          Expression    Expression    Expression    Expression   
+terms         Expression    Expression    Expression    Expression   
+model         List,3        List,4        List,3        List,4       
+th_val        -0.06191171   Numeric,2     0.06529303    Numeric,2    
+nthresh       1             2             1             2            
 > sapply(seg_fit_all, deviance)
 seg_dyn_1_fit seg_dyn_2_fit seg_grd_1_fit seg_grd_2_fit 
      280.2408      246.8087      279.1012      236.3419 
@@ -169,4 +192,4 @@ x_seg3  1.8032784  0.1120491 16.09365 9.369453e-38
 > 
 > proc.time()
    user  system elapsed 
-  3.007   0.047   3.034 
+  3.752   0.052   4.364 

@@ -5,18 +5,18 @@
 #' @param th_var the threshold variable.
 #' @template param_nthresh
 #' @template param_trim
-#' @return An object of class "segreg_search" and "list"
+#' @return An object of class "seglm_search" and "list"
 #' @examples
 #' data_thresh <- sim_thresh()
 #' X_inp <-  as.matrix(data_thresh[, "x", drop = FALSE])
 #' y_inp <-  as.matrix(data_thresh[, "y"])
-#' segReg_search_dynprog(X=X_inp, y=y_inp, th_var = X_inp)
-#' segReg_search_grid(X=X_inp, y=y_inp, th_var = X_inp)
+#' seglm_search_dynprog(X=X_inp, y=y_inp, th_var = X_inp)
+#' seglm_search_grid(X=X_inp, y=y_inp, th_var = X_inp)
 #' @export
 
 #' @importFrom strucchange breakpoints
 #' @importFrom stats reformulate lm lm.fit
-segReg_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15){
+seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15){
 
   if(!requireNamespace("strucchange", quietly = TRUE)) {
     stop("Package 'strucchange' needed for this function to work. Please install it.",
@@ -99,16 +99,16 @@ segReg_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15){
   res$RSS.table <- RSS.table
   # res$breakpoint <- br
   res$SSR <-  NA
-  class(res) <- c("segreg_search", "list")
+  class(res) <- c("seglm_search", "list")
   res
 }
 
-#' @inheritParams  segReg_search_dynprog
-#' @rdname segReg_search_dynprog
+#' @inheritParams  seglm_search_dynprog
+#' @rdname seglm_search_dynprog
 #' @param iter,max.iter,trace,return_details arguments to set the number of iterations, as well return_details
 #' @export
 #' @import dplyr
-segReg_search_grid <- function(X, y, th_var, nthresh=1,
+seglm_search_grid <- function(X, y, th_var, nthresh=1,
                                trim=0.15,
                                iter = TRUE, trace = FALSE, max.iter = 3,
                                return_details = FALSE){
@@ -228,24 +228,24 @@ segReg_search_grid <- function(X, y, th_var, nthresh=1,
   res$th <- th_best
   res$SSR <-  SSR_best
   if(return_details) res$details <- SSR_df
-  class(res) <- c("segreg_search", "list")
+  class(res) <- c("seglm_search", "list")
   res
 }
 
 
 
-#' @param x  object of class *segreg_search*
+#' @param x  object of class *seglm_search*
 #' @param ... unused
-#' @rdname segReg_search_dynprog
+#' @rdname seglm_search_dynprog
 #' @export
-print.segreg_search <-  function(x, ...) {
+print.seglm_search <-  function(x, ...) {
   cat(paste("th:", x$th), "\n")
   cat(paste("SSR:", x$SSR), "\n")
 }
 
-#' @param object  object of class *segreg_search*
-#' @rdname segReg_search_dynprog
+#' @param object  object of class *seglm_search*
+#' @rdname seglm_search_dynprog
 #' @export
-deviance.segreg_search <-  function(object, ...) {
+deviance.seglm_search <-  function(object, ...) {
   object$SSR
 }
