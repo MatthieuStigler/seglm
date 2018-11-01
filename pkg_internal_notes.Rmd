@@ -43,4 +43,4 @@ knitr::opts_chunk$set(echo = TRUE)
 * Linton Seo (look at `nls()` and partially linear LS literature ) 
 * Greb shrinkage stuff. 
 * Generalized grid search for `glm()`, or any. Look at Seo JASA paper!
-
+* datasets from Hansen 2000!? https://www.ssc.wisc.edu/~bhansen/progs/ecnmt_00.html
