@@ -3,3 +3,4 @@
 ^seglm\.Rproj$
 ^\.Rproj\.user$
 man-roxygen/*
+^pkg_internal_notes\.*
