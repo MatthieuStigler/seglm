@@ -2,12 +2,12 @@
 % Please edit documentation in R/seglm_fit.R
 \name{seglm_fit}
 \alias{seglm_fit}
-\alias{seglm}
+\alias{print.seglm}
 \title{Low level function to estimate a segmented/threshold regression by pre-specifying the threshold values}
 \usage{
 seglm_fit(X, y, th_var, nthresh = 1, th_val)
 
-seglm(x, ...)
+\method{print}{seglm}(x, ...)
 }
 \arguments{
 \item{X}{matrix of regressors}
