@@ -27,6 +27,7 @@ prep_Xany <-  function(X, th_val, th_var, nthresh = length(th_val),
                        data = as.data.frame(X))
   if(clean_names) {
     colnames(XX) <- gsub(":seg", "_seg", colnames(XX))
+    colnames(XX) <- gsub("`?\\(Intercept\\)`?_seg", "Intercept_seg", colnames(XX))
   }
   XX
 }

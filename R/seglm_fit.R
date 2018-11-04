@@ -20,6 +20,8 @@ seglm_fit <- function(X, y, th_var, nthresh = 1, th_val){
 
   # X_dat <- prep_X(X=X, th_val=th_val, th_var= th_var, nthresh= nthresh)
   X_dat <- prep_Xany(X=X, th_val=th_val, th_var= th_var, nthresh= nthresh, clean_names = TRUE)
+  regimes <- cut(th_var, breaks = c(-Inf, th_val, Inf),
+                 labels = 1:(nthresh +1))
 
   ## rename
   # X_cols <-  colnames(X)
@@ -34,6 +36,7 @@ seglm_fit <- function(X, y, th_var, nthresh = 1, th_val){
   res <-  lm(y~. - 1, data = as.data.frame(Xy_dat))
   res$th_val <-  th_val
   res$nthresh <- nthresh
+  res$regime <-  regime
   class(res) <-  c("seglm", "lm")
   res
 }
@@ -42,8 +45,7 @@ coef.seglm <-  function(x, by_reg = FALSE) {
   res <- x$coefficient
   if(by_reg) {
     res <- matrix(res, ncol = x$nthresh+1)
-    rownames(res) <- unique(gsub("^`|_L`?$|_M`?$|_H`?$|_seg[0-9]{1,2}$", "",  names(x$coefficient)))
-    # colnames(res) <-  c("L", if(x$nthresh==1) NULL else "M", "H")
+    rownames(res) <- unique(gsub("^`|_L`?$|_M`?$|_H`?$|_seg[0-9]{1,2}`?$", "",  names(x$coefficient)))
     colnames(res) <-  paste("seg", 1:(x$nthresh+1), sep="")
   }
   res
