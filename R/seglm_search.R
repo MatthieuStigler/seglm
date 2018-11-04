@@ -113,7 +113,6 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
                                iter = TRUE, trace = FALSE, max.iter = 3,
                                return_details = FALSE){
 
-
   thVar <-  as.vector(th_var)
 
   ##
@@ -152,6 +151,7 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
     if(is.null(th_best)) th_best <-  df[n_row_best, "thresh"]
 
     ## define feasible points
+    df$step_2 <-  FALSE
     if(n_row_best - n_min > n_min) {
       df$step_2 <- df$n_row %in% n_min : (n_row_best - n_min )
     }
@@ -191,7 +191,6 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
   ## select best
   SSR_best <-  SSR_df[which.min(SSR_df$SSR),]
 
-
   if(nthresh == 2) {
     if(trace) cat("Best for nthresh=1:", SSR_best$th, "\n")
     old_best <- SSR_best
@@ -214,7 +213,6 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
       if(trace) cat("Best for nthresh=2, iter", i, "given th = ", old_best$thresh, ":", new_best$thresh, "\n")
     }
 
-    # th_best
     SSR_best <-  SSR_df[which.min(SSR_df$SSR_2),"SSR_2"]
     # th_best <- sort(c(SSR_best$thresh, SSR_best2$thresh))
     # SSR_best <- SSR_best2$SSR_2
