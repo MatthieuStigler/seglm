@@ -58,7 +58,7 @@ coef.seglm <-  function(x, by_reg = FALSE) {
 print.seglm <-  function(x, ...) {
   cat("Coefs:\n")
   print(coef.seglm(x, by_reg = TRUE))
-  cat("\nThreshold:", x$th_val)
+  cat("\nThreshold:", x$th_val, "\n")
 }
 
 
