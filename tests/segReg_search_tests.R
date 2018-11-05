@@ -54,7 +54,8 @@ seg_fit_all <-  list(seg_dyn_1_fit = seg_dyn_1_fit,
                      seg_grd_2_fit = seg_grd_2_fit)
 
 
-sapply(seg_fit_all, print)
+a <- sapply(seg_fit_all, print)
 sapply(seg_fit_all, deviance)
 sapply(seg_fit_all, coef)
 sapply(seg_fit_all, function(x) coef(summary(x)))
+

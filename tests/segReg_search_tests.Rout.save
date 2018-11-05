@@ -83,14 +83,11 @@ Best for nthresh=2, iter 1 given th =  -0.445662 : 0.06529303 . Converged, exit 
 > seg_grd_2_fit <- seglm_fit(X=X, y=y, th_val = seg_grd_2$th, th_var = X, nthresh = 2)
 > 
 > seg_grd_1_fit
+Coefs:
+        seg1     seg2
+x -0.8662471 1.803278
 
-Call:
-lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
-
-Coefficients:
- x_seg1   x_seg2  
--0.8662   1.8033  
-
+Threshold: 0.06529303 
 > 
 > seg_fit_all <-  list(seg_dyn_1_fit = seg_dyn_1_fit,
 +                      seg_dyn_2_fit = seg_dyn_2_fit,
@@ -98,54 +95,27 @@ Coefficients:
 +                      seg_grd_2_fit = seg_grd_2_fit)
 > 
 > 
-> sapply(seg_fit_all, print)
+> a <- sapply(seg_fit_all, print)
+Coefs:
+        seg1     seg2
+x -0.8639384 1.800775
 
-Call:
-lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
+Threshold: -0.06191171 
+Coefs:
+        seg1      seg2     seg3
+x -0.8221864 -9.861262 1.803278
 
-Coefficients:
- x_seg1   x_seg2  
--0.8639   1.8008  
+Threshold: -0.2357004 0.06529303 
+Coefs:
+        seg1     seg2
+x -0.8662471 1.803278
 
+Threshold: 0.06529303 
+Coefs:
+        seg1      seg2     seg3
+x -0.7288264 -4.685082 1.803278
 
-Call:
-lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
-
-Coefficients:
- x_seg1   x_seg2   x_seg3  
--0.8222  -9.8613   1.8033  
-
-
-Call:
-lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
-
-Coefficients:
- x_seg1   x_seg2  
--0.8662   1.8033  
-
-
-Call:
-lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
-
-Coefficients:
- x_seg1   x_seg2   x_seg3  
--0.7288  -4.6851   1.8033  
-
-              seg_dyn_1_fit seg_dyn_2_fit seg_grd_1_fit seg_grd_2_fit
-coefficients  Numeric,2     Numeric,3     Numeric,2     Numeric,3    
-residuals     Numeric,200   Numeric,200   Numeric,200   Numeric,200  
-effects       Numeric,200   Numeric,200   Numeric,200   Numeric,200  
-rank          2             3             2             3            
-fitted.values Numeric,200   Numeric,200   Numeric,200   Numeric,200  
-assign        Integer,2     Integer,3     Integer,2     Integer,3    
-qr            List,5        List,5        List,5        List,5       
-df.residual   198           197           198           197          
-xlevels       List,0        List,0        List,0        List,0       
-call          Expression    Expression    Expression    Expression   
-terms         Expression    Expression    Expression    Expression   
-model         List,3        List,4        List,3        List,4       
-th_val        -0.06191171   Numeric,2     0.06529303    Numeric,2    
-nthresh       1             2             1             2            
+Threshold: -0.445662 0.06529303 
 > sapply(seg_fit_all, deviance)
 seg_dyn_1_fit seg_dyn_2_fit seg_grd_1_fit seg_grd_2_fit 
      280.2408      246.8087      279.1012      236.3419 
