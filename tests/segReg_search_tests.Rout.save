@@ -1,5 +1,5 @@
 
-R version 3.4.4 (2018-03-15) -- "Someone to Lean On"
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -32,15 +32,15 @@ Type 'q()' to quit R.
 > seg_grd_1_tr <- seglm_search_grid(X=X, y=y, th_var = X, trim = 0.1)
 > 
 > seg_dyn_1
-th: -0.0619117105767217 
-SSR: 280.240800061638 
+th: 0.0652930335253153 
+SSR: 279.101158005311 
 > seg_grd_1
 th: 0.0652930335253153 
 SSR: 279.101158005311 
 > 
 > seg_dyn_1_tr
-th: -0.0619117105767217 
-SSR: 280.240800061638 
+th: 0.0652930335253153 
+SSR: 279.101158005311 
 > seg_grd_1_tr
 th: 0.0652930335253153 
 SSR: 279.101158005311 
@@ -50,8 +50,8 @@ SSR: 279.101158005311
 > seg_grd_2 <- seglm_search_grid(X=X, y=y, th_var = X, nthresh = 2)
 > 
 > seg_dyn_2
-th: -0.235700359100477 th: 0.0652930335253153 
-SSR: 246.808745352356 
+th: -0.445661970099958 th: 0.0652930335253153 
+SSR: 236.341878981821 
 > seg_grd_2
 th: -0.445661970099958 th: 0.0652930335253153 
 SSR: 236.341878981821 
@@ -67,7 +67,7 @@ SSR: 236.341878981821
 > 
 > sapply(seg_search_all, deviance)
    seg_dyn_1    seg_dyn_2 seg_dyn_1_tr    seg_grd_1    seg_grd_2 seg_grd_1_tr 
-    280.2408     246.8087     280.2408     279.1012     236.3419     279.1012 
+    279.1012     236.3419     279.1012     279.1012     236.3419     279.1012 
 > 
 > ## trace
 > seg_grid_2 <- seglm_search_grid(X=X, y=y, th_var = X, nthresh = 2, trace = TRUE)
@@ -98,14 +98,14 @@ Threshold: 0.06529303
 > a <- sapply(seg_fit_all, print)
 Coefs:
         seg1     seg2
-x -0.8639384 1.800775
+x -0.8662471 1.803278
 
-Threshold: -0.06191171 
+Threshold: 0.06529303 
 Coefs:
         seg1      seg2     seg3
-x -0.8221864 -9.861262 1.803278
+x -0.7288264 -4.685082 1.803278
 
-Threshold: -0.2357004 0.06529303 
+Threshold: -0.445662 0.06529303 
 Coefs:
         seg1     seg2
 x -0.8662471 1.803278
@@ -118,15 +118,15 @@ x -0.7288264 -4.685082 1.803278
 Threshold: -0.445662 0.06529303 
 > sapply(seg_fit_all, deviance)
 seg_dyn_1_fit seg_dyn_2_fit seg_grd_1_fit seg_grd_2_fit 
-     280.2408      246.8087      279.1012      236.3419 
+     279.1012      236.3419      279.1012      236.3419 
 > sapply(seg_fit_all, coef)
 $seg_dyn_1_fit
     x_seg1     x_seg2 
--0.8639384  1.8007754 
+-0.8662471  1.8032784 
 
 $seg_dyn_2_fit
     x_seg1     x_seg2     x_seg3 
--0.8221864 -9.8612621  1.8032784 
+-0.7288264 -4.6850816  1.8032784 
 
 $seg_grd_1_fit
     x_seg1     x_seg2 
@@ -139,14 +139,14 @@ $seg_grd_2_fit
 > sapply(seg_fit_all, function(x) coef(summary(x)))
 $seg_dyn_1_fit
          Estimate Std. Error   t value     Pr(>|t|)
-x_seg1 -0.8639384  0.1318137 -6.554238 4.738803e-10
-x_seg2  1.8007754  0.1216916 14.797860 7.409070e-34
+x_seg1 -0.8662471  0.1315299 -6.585931 3.979148e-10
+x_seg2  1.8032784  0.1214561 14.847163 5.231779e-34
 
 $seg_dyn_2_fit
-         Estimate Std. Error   t value     Pr(>|t|)
-x_seg1 -0.8221864  0.1243039 -6.614327 3.434685e-10
-x_seg2 -9.8612621  1.7760691 -5.552296 9.039215e-08
-x_seg3  1.8032784  0.1145034 15.748694 1.044224e-36
+         Estimate Std. Error  t value     Pr(>|t|)
+x_seg1 -0.7288264  0.1235067 -5.90111 1.553137e-08
+x_seg2 -4.6850816  0.6510729 -7.19594 1.270186e-11
+x_seg3  1.8032784  0.1120491 16.09365 9.369453e-38
 
 $seg_grd_1_fit
          Estimate Std. Error   t value     Pr(>|t|)
@@ -160,6 +160,7 @@ x_seg2 -4.6850816  0.6510729 -7.19594 1.270186e-11
 x_seg3  1.8032784  0.1120491 16.09365 9.369453e-38
 
 > 
+> 
 > proc.time()
    user  system elapsed 
-  3.752   0.052   4.364 
+  2.629   0.063   2.678 

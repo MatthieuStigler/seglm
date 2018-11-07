@@ -41,8 +41,8 @@ seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, ...){
   ##
   th_var_order <- order(th_var)
   th_var_ordered <- th_var[th_var_order]
-  # X_ordrd <- X[th_var_order,]
-  # y_ordrd <- y[th_var_order,, drop=FALSE]
+  X_ordrd <- X[th_var_order,, drop=FALSE]
+  y_ordrd <- y[th_var_order,, drop=FALSE]
 
 
   # trim arg
@@ -57,25 +57,25 @@ seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, ...){
   if(n_in/nthresh < K) warning("Data too small/trim too large")
 
   ## alter
-  if(any(grepl(pattern = " ", colnames(X)))) {
-    colnames(X) <- gsub(" ", "_", colnames(X))
-  }
-  Xy <- (data.frame(y=y, X)[th_var_order,])#[allin,]
-  colnames(Xy) <- c("y", colnames(X))
-
-  # ## formu
-  formu <-  reformulate(colnames(X), response="y")
-  n_min <- max(ceiling(trim*n_th), K+1)
+  # if(any(grepl(pattern = " ", colnames(X)))) {
+  #   colnames(X) <- gsub(" ", "_", colnames(X))
+  # }
+  # Xy <- (data.frame(y=y, X)[th_var_order,])#[allin,]
+  # colnames(Xy) <- c("y", colnames(X))
+  #
+  # # ## formu
+  # formu <-  reformulate(colnames(X), response="y")
+  # n_min <- max(ceiling(trim*n_th), K+1)
 
   # fixInNamespace(breakpoints.formula, "strucchange")
-  br_first <- strucchange::breakpoints(formula = formu, data=Xy, breaks=nthresh, h= NULL)
-  br <- strucchange::breakpoints(br_first, breaks=nthresh)
-  # br <- breakpoints.manual(X=X, y=y, breaks=nthresh, h= NULL)
+  # br_first <- strucchange::breakpoints(formula = formu, data=Xy, breaks=nthresh, h= NULL)
+  # br <- strucchange::breakpoints(br_first, breaks=nthresh)
+  br <- breakpoints.manual(X=X_ordrd, y=y_ordrd, breaks=nthresh, h= NULL)
 
   br_points <- br$breakpoints
   if(all(is.na(br_points))) warning("br is NA")
 
-  RSS.table <- as.data.frame(br_first$RSS.table) %>% as_tibble()
+  RSS.table <- as.data.frame(br$RSS.table) %>% as_tibble()
   RSS.table$is_min <- if(nthresh == 1) {
     RSS.table[,"index"] == br_points
   } else if(nthresh == 2) {
