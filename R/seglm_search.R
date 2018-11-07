@@ -241,7 +241,6 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
 
 
 #' @param x  object of class *seglm_search*
-#' @param ... unused
 #' @rdname seglm_search_dynprog
 #' @export
 print.seglm_search <-  function(x, ...) {

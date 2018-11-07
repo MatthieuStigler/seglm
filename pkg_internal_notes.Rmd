@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Short term
 
-* correct mismatch grid/dynprog
+* correct mismatch grid/dynprog. DONE
 * add third method:  grid with recresid, much faster!
 * understand effect of ordering over threshold then use structural break techniques
 * rename functions, needs consistency
@@ -27,8 +27,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Further functions:
 
-* `seglm_lm()` "workhorse" function
-* add function `regime()`
+* `seglm_lm()` "workhorse" function. IN PROGRESS
+* add function `regime()` IN PROGRESS
 * `predict()`: option to feed raw data, transform then
 * broom/tidy implementation: 
     - `augment()`: add `regime()`?
@@ -38,7 +38,7 @@ knitr::opts_chunk$set(echo = TRUE)
     
 ## Long term functionalitites to add:
 
-* shrinkage methodd for threshold
+* shrinkage method for threshold
 * bootstrap? look at new paradigms...
 * Linton Seo (look at `nls()` and partially linear LS literature ) 
 * Greb shrinkage stuff. 

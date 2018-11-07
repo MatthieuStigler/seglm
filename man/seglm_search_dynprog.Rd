@@ -7,7 +7,7 @@
 \alias{deviance.seglm_search}
 \title{Low level function to search the thresholds}
 \usage{
-seglm_search_dynprog(X, y, th_var, nthresh = 1, trim = 0.15)
+seglm_search_dynprog(X, y, th_var, nthresh = 1, trim = 0.15, ...)
 
 seglm_search_grid(X, y, th_var, nthresh = 1, trim = 0.15,
   iter = TRUE, trace = FALSE, max.iter = 3, return_details = FALSE)
@@ -27,11 +27,11 @@ seglm_search_grid(X, y, th_var, nthresh = 1, trim = 0.15,
 
 \item{trim}{The minimum percentage of observations to keep in each regime.}
 
+\item{...}{Further argumetns passed to the underlying breakpoints function}
+
 \item{iter, max.iter, trace, return_details}{arguments to set the number of iterations, as well return_details}
 
 \item{x}{object of class \emph{seglm_search}}
-
-\item{...}{unused}
 
 \item{object}{object of class \emph{seglm_search}}
 }

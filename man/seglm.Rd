@@ -4,14 +4,14 @@
 \alias{seglm}
 \title{Low level function to estimate a segmented/threshold regression by pre-specifying the threshold values}
 \usage{
-seglm(formula, data, th_var, nthresh = 1, ...)
+seglm(formula, data, th_var_name, nthresh = 1, ...)
 }
 \arguments{
 \item{formula}{the usual formula for the linear model to estimate}
 
 \item{data}{the data-frame containing the variables in the model.}
 
-\item{th_var}{The threshold variable, i.e. variable to segment over.}
+\item{th_var_name}{the name of the threshold variable. Using \emph{.time} will run a standard changepoint model.}
 
 \item{nthresh}{The number of threshold/breakpoints to estimate.}
 
@@ -25,5 +25,5 @@ Low level function to estimate a segmented/threshold regression by pre-specifyin
 }
 \examples{
 data_thresh <- sim_thresh()
-seglm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
+seglm(formula = y~x, data = data_thresh, th_var_name = "x", nthresh =1)
 }
