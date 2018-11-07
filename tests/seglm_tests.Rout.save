@@ -1,0 +1,167 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(seglm)
+> 
+> set.seed(123)
+> data_thresh <- sim_thresh()
+> head(data_thresh)
+          y           x regime
+1 3.1746201 -0.56047565      1
+2 2.4203420 -0.23017749      1
+3 2.1818216  1.55870831      0
+4 1.7996008  0.07050839      0
+5 0.8890902  0.12928774      0
+6 2.0958051  1.71506499      0
+> f <-  y ~ x
+> 
+> out_1 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 1)
+> out_2 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 2)
+> # out_3 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 3)
+> 
+> out_time <- seglm(formula = y ~ x, data=data_thresh, th_var_name = ".time", nthresh = 2)
+> 
+> 
+> ## together
+> out_list <-  list(out_1 = out_1,
++                   out_2 = out_2,
++                   out_time = out_time)
+> 
+> a <-  lapply(out_list, print)
+Coefs:
+               seg1      seg2
+Intercept 1.3073176 0.3455491
+x         0.9241244 1.0886457
+
+Threshold: -0.06191171 
+Coefs:
+               seg1      seg2     seg3
+Intercept 1.2645061 0.7284752 4.683075
+x         0.3072026 0.3066934 1.193261
+
+Threshold: -0.03406725 0.4351815 
+Coefs:
+              seg1      seg2      seg3
+Intercept 1.389276 1.3566696 1.1867877
+x         1.477221 0.3585016 0.5918629
+
+Threshold: 86 118 
+> lapply(out_list, coef)
+$out_1
+Intercept_seg1 Intercept_seg2         x_seg1         x_seg2 
+     1.3073176      0.9241244      0.3455491      1.0886457 
+
+$out_2
+Intercept_seg1 Intercept_seg2 Intercept_seg3         x_seg1         x_seg2 
+     1.2645061      0.3072026      0.7284752      0.3066934      4.6830746 
+        x_seg3 
+     1.1932611 
+
+$out_time
+Intercept_seg1 Intercept_seg2 Intercept_seg3         x_seg1         x_seg2 
+     1.3892757      1.4772206      1.3566696      0.3585016      1.1867877 
+        x_seg3 
+     0.5918629 
+
+> lapply(out_list, summary)
+$out_1
+
+Call:
+lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.4720 -0.6299 -0.0758  0.6901  2.4437 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+Intercept_seg1   1.3073     0.1797   7.276 8.08e-12 ***
+Intercept_seg2   0.9241     0.1503   6.147 4.34e-09 ***
+x_seg1           0.3455     0.1991   1.736   0.0842 .  
+x_seg2           1.0886     0.1538   7.079 2.52e-11 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.9886 on 196 degrees of freedom
+Multiple R-squared:  0.7057,	Adjusted R-squared:  0.6997 
+F-statistic: 117.5 on 4 and 196 DF,  p-value: < 2.2e-16
+
+
+$out_2
+
+Call:
+lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.37858 -0.60402 -0.05292  0.66670  2.47200 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+Intercept_seg1   1.2645     0.1666   7.591  1.3e-12 ***
+Intercept_seg2   0.3072     0.3016   1.019  0.30960    
+Intercept_seg3   0.7285     0.2707   2.691  0.00775 ** 
+x_seg1           0.3067     0.1882   1.630  0.10482    
+x_seg2           4.6831     1.2261   3.820  0.00018 ***
+x_seg3           1.1933     0.2170   5.499  1.2e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.9706 on 194 degrees of freedom
+Multiple R-squared:  0.7192,	Adjusted R-squared:  0.7105 
+F-statistic: 82.83 on 6 and 194 DF,  p-value: < 2.2e-16
+
+
+$out_time
+
+Call:
+lm(formula = y ~ . - 1, data = as.data.frame(Xy_dat))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.41922 -0.65260 -0.04854  0.64915  2.48666 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+Intercept_seg1   1.3893     0.1074  12.937  < 2e-16 ***
+Intercept_seg2   1.4772     0.1762   8.385 1.03e-14 ***
+Intercept_seg3   1.3567     0.1102  12.315  < 2e-16 ***
+x_seg1           0.3585     0.1205   2.975   0.0033 ** 
+x_seg2           1.1868     0.1987   5.973 1.09e-08 ***
+x_seg3           0.5919     0.1091   5.424 1.72e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.9954 on 194 degrees of freedom
+Multiple R-squared:  0.7047,	Adjusted R-squared:  0.6956 
+F-statistic: 77.17 on 6 and 194 DF,  p-value: < 2.2e-16
+
+
+> sapply(out_list, deviance)
+   out_1    out_2 out_time 
+191.5659 182.7747 192.2154 
+> sapply(out_list, AIC)
+   out_1    out_2 out_time 
+568.9583 563.5628 573.6353 
+> 
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  0.860   0.025   0.868 
