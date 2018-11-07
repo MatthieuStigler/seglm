@@ -32,6 +32,17 @@ prep_Xany <-  function(X, th_val, th_var, nthresh = length(th_val),
   XX
 }
 
+SSR_XY <-  function(X, y) {
+  c(crossprod(lm.fit(X, y)$residuals))
+}
+
+
+SSR_XY_th <-  function(X, y, th_val, th_var, nthresh) {
+  X_dat <- prep_Xany(X, th_val=th_val, th_var= th_var, nthresh= nthresh)
+  SSR_XY(X_dat, y)
+}
+
+
 
 get_mat_dim <- function(th_var, nthresh=1, trim=0.15){
 
