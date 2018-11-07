@@ -33,14 +33,14 @@ Type 'q()' to quit R.
 > 
 > seg_dyn_1
 th: -0.0619117105767217 
-SSR: NA 
+SSR: 280.240800061638 
 > seg_grd_1
 th: 0.0652930335253153 
 SSR: 279.101158005311 
 > 
 > seg_dyn_1_tr
 th: -0.0619117105767217 
-SSR: NA 
+SSR: 280.240800061638 
 > seg_grd_1_tr
 th: 0.0652930335253153 
 SSR: 279.101158005311 
@@ -51,7 +51,7 @@ SSR: 279.101158005311
 > 
 > seg_dyn_2
 th: -0.235700359100477 th: 0.0652930335253153 
-SSR: NA 
+SSR: 246.808745352356 
 > seg_grd_2
 th: -0.445661970099958 th: 0.0652930335253153 
 SSR: 236.341878981821 
@@ -67,7 +67,7 @@ SSR: 236.341878981821
 > 
 > sapply(seg_search_all, deviance)
    seg_dyn_1    seg_dyn_2 seg_dyn_1_tr    seg_grd_1    seg_grd_2 seg_grd_1_tr 
-          NA           NA           NA     279.1012     236.3419     279.1012 
+    280.2408     246.8087     280.2408     279.1012     236.3419     279.1012 
 > 
 > ## trace
 > seg_grid_2 <- seglm_search_grid(X=X, y=y, th_var = X, nthresh = 2, trace = TRUE)

@@ -3,6 +3,7 @@
 #' @param X matrix of regressors
 #' @param y matrix of the response
 #' @param th_var the threshold variable.
+#' @param ... Further argumetns passed to the underlying breakpoints function
 #' @template param_nthresh
 #' @template param_trim
 #' @return An object of class "seglm_search" and "list"
@@ -16,7 +17,7 @@
 
 #' @importFrom strucchange breakpoints
 #' @importFrom stats reformulate lm lm.fit
-seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15){
+seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, ...){
 
   if(!requireNamespace("strucchange", quietly = TRUE)) {
     stop("Package 'strucchange' needed for this function to work. Please install it.",
@@ -60,14 +61,17 @@ seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15){
     colnames(X) <- gsub(" ", "_", colnames(X))
   }
   Xy <- (data.frame(y=y, X)[th_var_order,])#[allin,]
+  colnames(Xy) <- c("y", colnames(X))
 
-  ## formu
+  # ## formu
   formu <-  reformulate(colnames(X), response="y")
   n_min <- max(ceiling(trim*n_th), K+1)
 
   # fixInNamespace(breakpoints.formula, "strucchange")
   br_first <- strucchange::breakpoints(formula = formu, data=Xy, breaks=nthresh, h= NULL)
   br <- strucchange::breakpoints(br_first, breaks=nthresh)
+  # br <- breakpoints.manual(X=X, y=y, breaks=nthresh, h= NULL)
+
   br_points <- br$breakpoints
   if(all(is.na(br_points))) warning("br is NA")
 
@@ -92,13 +96,17 @@ seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15){
   #   select(th, index, break.RSS)
   # RSS.table$th <-
 
+  # compute SSR (ideally would just retrieve from the grid...)
+  th <- th_var_ordered[br_points]
+  SSR <-  SSR_XY_th(X, y, th_val =  th, th_var = th_var, nthresh = nthresh)
+
   ## export results
   res <- list()
-  res$index <- br$breakpoints
-  res$th <- th_var_ordered[br$breakpoints]
+  res$index <- br_points
+  res$th <- th
   res$RSS.table <- RSS.table
   # res$breakpoint <- br
-  res$SSR <-  NA
+  res$SSR <-  SSR
   class(res) <- c("seglm_search", "list")
   res
 }
