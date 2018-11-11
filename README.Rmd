@@ -25,7 +25,8 @@ When the threshold variable is time, the model reduces to the well-known structu
 todo
 
 ``` r
-install.packages("seglm")
+library(remotes)
+install_github("MatthieuStigler/seglm")
 ```
 
 ## Example

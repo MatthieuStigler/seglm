@@ -13,7 +13,8 @@ Installation
 todo
 
 ``` r
-install.packages("seglm")
+library(remotes)
+install_github("MatthieuStigler/seglm")
 ```
 
 Example
@@ -29,8 +30,8 @@ data_thresh <- sim_thresh()
 seglm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
 #> Coefs:
 #>               seg1      seg2
-#> Intercept 1.099105 0.3848674
-#> x         1.316637 0.9534091
+#> Intercept 1.642587 0.6674002
+#> x         1.296980 0.8706245
 #> 
-#> Threshold: 0.4280042
+#> Threshold: -0.2501174
 ```
