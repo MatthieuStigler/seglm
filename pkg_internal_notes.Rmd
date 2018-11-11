@@ -18,12 +18,18 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Short term
 
 * correct mismatch grid/dynprog. DONE
+* push to github DONE
+* rename functions, needs consistency DONE
+* push to github DONE
+* dynprog for more than 2 nthresh!!
+* dynprog only return SSR if necessary!
+* clean utilities.R some not used anymore
 * add third method:  grid with recresid, much faster!
 * understand effect of ordering over threshold then use structural break techniques
-* rename functions, needs consistency
-* see potential of other packages, and other methods (penalized regression)
-* push to github
-* clean utilities.R some not used anymore
+
+### Further functionalities:
+
+* grid should work for matrix Y! Easy for algo search, need to generalize recresid?!
 
 ### Further functions:
 
