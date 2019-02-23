@@ -69,3 +69,18 @@ get_mat_dim <- function(th_var, nthresh=1, trim=0.15){
 
 
 }
+
+getPerms <- function(x) {
+  if (length(x) == 1) {
+    res <- x
+  }
+  else {
+    res <- matrix(nrow = 0, ncol = length(x))
+    for (i in seq_along(x)) {
+      res <- rbind(res, cbind(x[i], Recall(x[-i])))
+    }
+  }
+  res2 <- as.data.frame(res)
+  colnames(res2) <-  paste("break", 1:length(x), sep="")
+  res2
+}
