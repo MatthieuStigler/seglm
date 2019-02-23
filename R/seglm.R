@@ -1,9 +1,10 @@
-#' Low level function to estimate a segmented/threshold regression by pre-specifying the threshold values
+#' High level function to estimate a segmented/threshold regression
 #'
 #' @param formula the usual formula for the linear model to estimate
 #' @param data the data-frame containing the variables in the model.
-#' @param ... further arguments passed to lower level *TODO* functions
+#' @param ... further arguments passed to the lower-level \code{\link{seglm_search}} function
 #' @param th_var_name the name of the threshold variable. Using *.time* will run a standard changepoint model.
+#' @param th Optional. The threshold value(s), should be of length \code{nthresh}.
 #' @template param_nthresh
 #' @return An object of class "seglm" and "lm"
 #' @examples
@@ -13,7 +14,7 @@
 
 
 #' @importFrom stats model.frame model.matrix model.response
-seglm <- function(formula, data, th_var_name, nthresh = 1, ...){
+seglm <- function(formula, data, th_var_name, nthresh = 1, th=NULL, ...){
 
 
   ## Extract data
@@ -30,14 +31,20 @@ seglm <- function(formula, data, th_var_name, nthresh = 1, ...){
 
 
   ## do search:
-  search <- seglm_search_grid(X=X, y = Y, nthresh = nthresh, th_var=th_var_M, ...)
+  if(!is.null(th)) {
+    th_values <-  th
+  } else {
+    algo <- ifelse(nthresh %in% 1:2, "grid", "dynprog")
+    search <- seglm_search(X=X, y = Y, nthresh = nthresh, th_var=th_var_M, algorithm = algo, ...)
+    th_values <- search$th
+  }
   # search <- seglm_search_dynprog(X=X, y = Y, nthresh = nthresh, th_var=th_var_M, ...)
   # search <- seglm_search_grid(X=X, y = Y, nthresh = nthresh, th_var=th_var_M)
   # search <- seglm_search_dynprog(X=X, y = Y, nthresh = nthresh, th_var=th_var_M)
 
   ## pass arguments
   res <- seglm_fit(X=X, y=Y, th_var=th_var_M, nthresh = nthresh,
-            th_val = search$th)
+            th_val = th_values)
   res
 }
 

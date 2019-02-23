@@ -2,9 +2,9 @@
 % Please edit documentation in R/seglm.R
 \name{seglm}
 \alias{seglm}
-\title{Low level function to estimate a segmented/threshold regression by pre-specifying the threshold values}
+\title{High level function to estimate a segmented/threshold regression}
 \usage{
-seglm(formula, data, th_var_name, nthresh = 1, ...)
+seglm(formula, data, th_var_name, nthresh = 1, th = NULL, ...)
 }
 \arguments{
 \item{formula}{the usual formula for the linear model to estimate}
@@ -15,13 +15,15 @@ seglm(formula, data, th_var_name, nthresh = 1, ...)
 
 \item{nthresh}{The number of threshold/breakpoints to estimate.}
 
-\item{...}{further arguments passed to lower level \emph{TODO} functions}
+\item{th}{Optional. The threshold value(s), should be of length \code{nthresh}.}
+
+\item{...}{further arguments passed to the lower-level \code{\link{segreg_search}} function}
 }
 \value{
 An object of class "seglm" and "lm"
 }
 \description{
-Low level function to estimate a segmented/threshold regression by pre-specifying the threshold values
+High level function to estimate a segmented/threshold regression
 }
 \examples{
 data_thresh <- sim_thresh()
