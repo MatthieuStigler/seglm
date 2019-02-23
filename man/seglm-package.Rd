@@ -2,10 +2,12 @@
 % Please edit documentation in R/seglm-package.R
 \docType{package}
 \name{seglm-package}
-\alias{seglm}
 \alias{seglm-package}
-\title{seglm: Segmented regression}
+\alias{seglm}
+\title{seglm: a package for segmented regression, also known as threshold regression, piecewise regression, or regression with structural break}
 \description{
+The main function is seglm
+
 This package computes segmented, also known as threshold regressions.
 }
 \author{
