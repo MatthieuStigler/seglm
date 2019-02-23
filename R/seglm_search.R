@@ -3,11 +3,12 @@
 #' @param X matrix of regressors
 #' @param y matrix of the response
 #' @param th_var the threshold variable.
-#' @param RSS.table Whether to return the RSS.table, contiaining the underlying RSS computations.
-#' @param ... Further arguments passed to the underlying breakpoints function
 #' @template param_nthresh
 #' @template param_trim
-#' @return An object of class "seglm_search" and "list"
+#' @param algorithm The type of algorithm used.
+#' @param ... Further arguments passed to the underlying breakpoints function
+#' @return An object of class "seglm_search" and "list".
+#' This contains mainly the slot \code{th} with the threshold estimates, and the slot \code{SSR} with the resulting SSR.
 #' @examples
 #' data_thresh <- sim_thresh()
 #' X_inp <-  as.matrix(data_thresh[, "x", drop = FALSE])
@@ -16,8 +17,23 @@
 #' seglm_search_grid(X=X_inp, y=y_inp, th_var = X_inp)
 #' @export
 
+seglm_search <- function(X, y, th_var, nthresh=1, trim=0.15, algorithm = c("grid", "dynprog"), ...){
+  algorithm <-  match.arg(algorithm)
+
+  if(algorithm=="grid" & ntresh>2) stop("Algorithm `grid` works only for nthresh %in% 1,2")
+  if(algorithm=="grid") {
+    res <- seglm_search_grid(X=X, y = y, nthresh = nthresh, th_var=th_var, trim=trim, ...)
+  } else {
+    res <- seglm_search_dynprog(X=X, y = y, nthresh = nthresh, th_var=th_var, trim=trim, ...)
+  }
+  res
+}
+
+#' @rdname seglm_search
+#' @param RSS.table Whether to return the RSS.table, contiaining the underlying RSS computations.
 #' @importFrom strucchange breakpoints
 #' @importFrom stats reformulate lm lm.fit
+#' @export
 seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, RSS.table = FALSE, ...){
 
   if(!requireNamespace("strucchange", quietly = TRUE)) {
@@ -110,8 +126,8 @@ seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, RSS.table =
   res
 }
 
-#' @inheritParams  seglm_search_dynprog
-#' @rdname seglm_search_dynprog
+
+#' @rdname seglm_search
 #' @param iter,max.iter,trace,return_details arguments to set the number of iterations, as well return_details
 #' @export
 #' @import dplyr
@@ -121,6 +137,7 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
                                return_details = FALSE){
 
   thVar <-  as.vector(th_var)
+  if(nthresh>2) stop("Works only for nthresh %in% 1,2")
 
   ##
   N <- nrow(X)
@@ -240,7 +257,7 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
 
 
 #' @param x  object of class *seglm_search*
-#' @rdname seglm_search_dynprog
+#' @rdname seglm_search
 #' @export
 print.seglm_search <-  function(x, ...) {
   cat(paste("th:", x$th), "\n")
@@ -248,7 +265,7 @@ print.seglm_search <-  function(x, ...) {
 }
 
 #' @param object  object of class *seglm_search*
-#' @rdname seglm_search_dynprog
+#' @rdname seglm_search
 #' @export
 deviance.seglm_search <-  function(object, ...) {
   object$SSR
