@@ -36,7 +36,7 @@ seglm <- function(formula, data, th_var_name, nthresh = 1, th=NULL, ...){
   } else {
     algo <- ifelse(nthresh %in% 1:2, "grid", "dynprog")
     search <- seglm_search(X=X, y = Y, nthresh = nthresh, th_var=th_var_M, algorithm = algo, ...)
-    th_values <- search$th
+    th_values <- get_th(search)
   }
   # search <- seglm_search_dynprog(X=X, y = Y, nthresh = nthresh, th_var=th_var_M, ...)
   # search <- seglm_search_grid(X=X, y = Y, nthresh = nthresh, th_var=th_var_M)

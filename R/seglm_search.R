@@ -119,7 +119,7 @@ seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, RSS.table =
   ## export results
   res <- list()
   res$index <- br_points
-  res$th <- th
+  res$th_val <- th
   res$RSS.table <- RSS.table
   res$SSR <-  SSR
   class(res) <- c("seglm_search", "list")
@@ -247,7 +247,7 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
 
   ## export results
   res <- list()
-  res$th <- th_best
+  res$th_val <- th_best
   res$SSR <-  SSR_best
   if(return_details) res$details <- SSR_df
   class(res) <- c("seglm_search", "list")

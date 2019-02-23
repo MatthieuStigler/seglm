@@ -17,7 +17,7 @@ seglm(formula, data, th_var_name, nthresh = 1, th = NULL, ...)
 
 \item{th}{Optional. The threshold value(s), should be of length \code{nthresh}.}
 
-\item{...}{further arguments passed to the lower-level \code{\link{segreg_search}} function}
+\item{...}{further arguments passed to the lower-level \code{\link{seglm_search}} function}
 }
 \value{
 An object of class "seglm" and "lm"
