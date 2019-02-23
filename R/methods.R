@@ -5,7 +5,7 @@
 #' @return A vector
 #' @examples
 #' data_thresh <- sim_thresh()
-#' mod_seg <- seglm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
+#' mod_seg <- seglm_lm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
 #' head(regime(mod_seg))
 #' @export
 
@@ -23,7 +23,7 @@ regime.default <-  function(object, ...) object$regime
 #' @return A vector
 #' @examples
 #' data_thresh <- sim_thresh()
-#' mod_seg <- seglm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
+#' mod_seg <- seglm_lm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
 #' get_th(mod_seg)
 #' @export
 get_th <-  function(object, ...) UseMethod("get_th")

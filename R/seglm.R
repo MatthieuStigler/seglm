@@ -9,12 +9,12 @@
 #' @return An object of class "seglm" and "lm"
 #' @examples
 #' data_thresh <- sim_thresh()
-#' seglm(formula = y~x, data = data_thresh, th_var_name = "x", nthresh =1)
+#' seglm_lm(formula = y~x, data = data_thresh, th_var_name = "x", nthresh =1)
 #' @export
 
 
 #' @importFrom stats model.frame model.matrix model.response
-seglm <- function(formula, data, th_var_name, nthresh = 1, th=NULL, ...){
+seglm_lm <- function(formula, data, th_var_name, nthresh = 1, th=NULL, ...){
 
 
   ## Extract data
@@ -55,12 +55,12 @@ if(FALSE) {
   head(data_thresh)
   f <-  y ~ x
 
-  out_1 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 1)
+  out_1 <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 1)
   out_1
   # regime(out_1)
 
-  out_2 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 2)
+  out_2 <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 2)
   out_2
 
-  out_time <- seglm(formula = y ~ x, data=data_thresh, th_var_name = ".time", nthresh = 2)
+  out_time <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = ".time", nthresh = 2)
 }

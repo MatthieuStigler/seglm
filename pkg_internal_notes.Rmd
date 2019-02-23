@@ -25,8 +25,8 @@ knitr::opts_chunk$set(echo = TRUE)
 * correct mismatch grid/dynprog. DONE
 * push to github DONE
 * rename functions, needs consistency DONE
-* dynprog for more than 2 nthresh!!
-* dynprog only return SSR if necessary!
+* dynprog for more than 2 nthresh!! DONE
+* dynprog only return SSR if necessary! DONE
 * clean utilities.R some not used anymore
 * add third method:  grid with recresid, much faster!
 * understand effect of ordering over threshold then use structural break techniques
@@ -39,6 +39,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Further functions:
 
+* Add function `get_th_int()`: returns empirical intervals, for observed values?
 * `seglm_lm()` "workhorse" function. IN PROGRESS
 * add function `regime()` IN PROGRESS
 * `predict()`: option to feed raw data, transform then
@@ -47,7 +48,7 @@ knitr::opts_chunk$set(echo = TRUE)
     - `tidy()` add threshold
 * Hansen `confint()`
 * Handle variables with no switch!?
-    
+
 ## Long term functionalitites to add:
 
 * shrinkage method for threshold

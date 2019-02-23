@@ -37,11 +37,11 @@ seglm_fit <- function(X, y, th_var, nthresh = 1, th_val){
   res$th_val <-  th_val
   res$nthresh <- nthresh
   res$regime <-  regime
-  class(res) <-  c("seglm", "lm")
+  class(res) <-  c("seglm_lm", "lm")
   res
 }
 
-coef.seglm <-  function(x, by_reg = FALSE) {
+coef.seglm_lm <-  function(x, by_reg = FALSE) {
   res <- x$coefficient
   if(by_reg) {
     res <- matrix(res, ncol = x$nthresh+1)
@@ -55,9 +55,9 @@ coef.seglm <-  function(x, by_reg = FALSE) {
 #' @param ... unused
 #' @rdname seglm_fit
 #' @export
-print.seglm <-  function(x, ...) {
+print.seglm_lm <-  function(x, ...) {
   cat("Coefs:\n")
-  print(coef.seglm(x, by_reg = TRUE))
+  print(coef.seglm_lm(x, by_reg = TRUE))
   cat("\nThreshold:", x$th_val, "\n")
 }
 

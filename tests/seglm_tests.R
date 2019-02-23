@@ -5,11 +5,11 @@ data_thresh <- sim_thresh()
 head(data_thresh)
 f <-  y ~ x
 
-out_1 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 1)
-out_2 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 2)
-# out_3 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 3)
+out_1 <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 1)
+out_2 <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 2)
+# out_3 <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 3)
 
-out_time <- seglm(formula = y ~ x, data=data_thresh, th_var_name = ".time", nthresh = 2)
+out_time <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = ".time", nthresh = 2)
 
 
 ## together

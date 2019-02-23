@@ -76,9 +76,9 @@ x_cuts_p5 <- solve_for_partition(d$x, d$y_observed, penalty = 5)
 
 
 library(seglm)
-segreg <- seglm(y_observed~x, data=d, th_var_name  ="x", nthresh=2)
-segreg2 <- seglm(y_observed~1, data=d, th_var_name  ="x", nthresh=2)
-segreg_nt5 <- seglm(y_observed~1, data=d, th_var_name  ="x", nthresh=5)
+segreg <- seglm_lm(y_observed~x, data=d, th_var_name  ="x", nthresh=2)
+segreg2 <- seglm_lm(y_observed~1, data=d, th_var_name  ="x", nthresh=2)
+segreg_nt5 <- seglm_lm(y_observed~1, data=d, th_var_name  ="x", nthresh=5)
 segreg2
 d2 <- d
 d2$pred <- predict(segreg2)

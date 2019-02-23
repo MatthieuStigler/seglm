@@ -22,6 +22,6 @@ Indicate the regime/segment in which each observation is
 }
 \examples{
 data_thresh <- sim_thresh()
-mod_seg <- seglm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
+mod_seg <- seglm_lm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
 head(regime(mod_seg))
 }

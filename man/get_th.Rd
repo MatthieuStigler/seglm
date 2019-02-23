@@ -22,6 +22,6 @@ Extract the threshold (aka breakpoints) value(s)
 }
 \examples{
 data_thresh <- sim_thresh()
-mod_seg <- seglm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
+mod_seg <- seglm_lm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
 get_th(mod_seg)
 }

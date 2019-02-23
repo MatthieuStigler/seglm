@@ -14,13 +14,13 @@ res
 
 library(seglm)
 
-seg_1 <- seglm(y~x, data=res, th_var_name = "x")
-seg_2 <- seglm(y~x, data=res, th_var_name = "x", nthresh=2)
-seg_3 <- seglm(y~x, data=res, th_var_name = "x", nthresh=3)
-seg_4 <- seglm(y~x, data=res, th_var_name = "x", nthresh=4)
-seg_5 <- seglm(y~x, data=res, th_var_name = "x", nthresh=5)
+seg_1 <- seglm_lm(y~x, data=res, th_var_name = "x")
+seg_2 <- seglm_lm(y~x, data=res, th_var_name = "x", nthresh=2)
+seg_3 <- seglm_lm(y~x, data=res, th_var_name = "x", nthresh=3)
+seg_4 <- seglm_lm(y~x, data=res, th_var_name = "x", nthresh=4)
+seg_5 <- seglm_lm(y~x, data=res, th_var_name = "x", nthresh=5)
 
-seglm_sol = list(th1 = seg_1,
+seglm_lm_sol = list(th1 = seg_1,
                  th2 = seg_1,
                  th3 = seg_3,
                  th4 = seg_4,
@@ -53,8 +53,8 @@ get_th(Rc_dyn_4)
 
 
 ## re-estimate
-seg_fin_seg <- seglm(y~x, data=res, th_var_name = "x", th = get_th(seg_4), nthresh=4)
-seg_fin_rc_dyn <- seglm(y~x, data=res, th_var_name = "x", th = get_th(Rc_dyn_4), nthresh=4)
+seg_fin_seg <- seglm_lm(y~x, data=res, th_var_name = "x", th = get_th(seg_4), nthresh=4)
+seg_fin_rc_dyn <- seglm_lm(y~x, data=res, th_var_name = "x", th = get_th(Rc_dyn_4), nthresh=4)
 
 deviance(seg_fin_seg)
 deviance(seg_fin_rc_dyn)
