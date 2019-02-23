@@ -7,7 +7,8 @@
 \alias{deviance.seglm_search}
 \title{Low level function to search the thresholds}
 \usage{
-seglm_search_dynprog(X, y, th_var, nthresh = 1, trim = 0.15, ...)
+seglm_search_dynprog(X, y, th_var, nthresh = 1, trim = 0.15,
+  RSS.table = FALSE, ...)
 
 seglm_search_grid(X, y, th_var, nthresh = 1, trim = 0.15,
   iter = TRUE, trace = FALSE, max.iter = 3, return_details = FALSE)

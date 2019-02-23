@@ -17,7 +17,7 @@
 
 #' @importFrom strucchange breakpoints
 #' @importFrom stats reformulate lm lm.fit
-seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, ...){
+seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, RSS.table = FALSE, ...){
 
   if(!requireNamespace("strucchange", quietly = TRUE)) {
     stop("Package 'strucchange' needed for this function to work. Please install it.",
@@ -75,26 +75,25 @@ seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, ...){
   br_points <- br$breakpoints
   if(all(is.na(br_points))) warning("br is NA")
 
-  RSS.table <- as.data.frame(br$RSS.table) %>% as_tibble()
-  RSS.table$is_min <- if(nthresh == 1) {
-    RSS.table[,"index"] == br_points
-  } else if(nthresh == 2) {
-    RSS.table$break1 == br_points[1] & RSS.table["break2"] == br_points[2] | RSS.table["break1"] == br_points[2] &
-      RSS.table["break2"] == br_points[1]
-  }
+  if(RSS.table) {
+    RSS.table <- as.data.frame(br$RSS.table)
+    if(nthresh ==1)   colnames(RSS.table) <- c("break1", "RSS1")
+    row_good <- RSS.table %>%
+      mutate(n_row = 1:n()) %>%
+      semi_join(getPerms(br_points), by = paste("break", 1:nthresh, sep=""))
+    RSS.table <- RSS.table %>%
+      mutate(is_min = 1:n() %in% row_good$n_row)
+    # if(nthresh == 1) {
+    #   RSS.table <-  RSS.table %>%
+    #     mutate(th = th_var[th_var_order[.data$index]])
+    # } else if (nthresh == 2) {
+    #   RSS.table <-  RSS.table %>%
+    #     mutate(th1 = th_var[th_var_order[.data$break1]],
+    #            th2 = th_var[th_var_order[.data$break2]])
 
-  if(nthresh == 1) {
-    RSS.table <-  RSS.table %>%
-      mutate(th = th_var[th_var_order[.data$index]])
-  } else if (nthresh == 2) {
-    RSS.table <-  RSS.table %>%
-      mutate(th1 = th_var[th_var_order[.data$break1]],
-             th2 = th_var[th_var_order[.data$break2]])
-
+  } else {
+    RSS.table <-  NULL
   }
-  #   mutate(th = th_var[th_var_order[index]]) %>%
-  #   select(th, index, break.RSS)
-  # RSS.table$th <-
 
   # compute SSR (ideally would just retrieve from the grid...)
   th <- th_var_ordered[br_points]
@@ -105,7 +104,6 @@ seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, ...){
   res$index <- br_points
   res$th <- th
   res$RSS.table <- RSS.table
-  # res$breakpoint <- br
   res$SSR <-  SSR
   class(res) <- c("seglm_search", "list")
   res
