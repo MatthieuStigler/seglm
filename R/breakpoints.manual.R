@@ -1,3 +1,7 @@
+#' @importFrom utils getFromNamespace
+strucch_breakpoints_breakpointsfull = getFromNamespace("breakpoints.breakpointsfull", "strucchange")
+
+
 breakpoints.manual <- function(X, y, h = 0.15, breaks = NULL, hpc = c("none", "foreach"), ...)
 {
 
@@ -114,6 +118,6 @@ breakpoints.manual <- function(X, y, h = 0.15, breaks = NULL, hpc = c("none", "f
                X = X,
                call = match.call())
   class(RVAL) <- c("breakpointsfull", "breakpoints")
-  RVAL$breakpoints <- strucchange:::breakpoints.breakpointsfull(RVAL, breaks = breaks)$breakpoints
+  RVAL$breakpoints <- strucch_breakpoints_breakpointsfull(RVAL, breaks = breaks)$breakpoints ## see above, imported from strucchange
   return(RVAL)
 }
