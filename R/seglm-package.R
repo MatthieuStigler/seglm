@@ -1,7 +1,23 @@
 #' seglm: a package for segmented regression, also known as threshold regression, piecewise regression, or regression with structural break
 #'
-#' The main function is seglm
+#' The main function is \code{\link{seglm_lm}}, which will automatically estimate the threshold points,
+#' and return a modified \code{lm} object, with supplementary \code{seglm_lm} objects.
+#' Usual \code{lm} methods such as \code{coef},  \code{summary}, \code{deviance} can be used on the output.
+#' Methods specific to segmented regressions such as \code{\link{regime}}, \code{\link{get_th}} have also been implemented.
 #' @name seglm-package
+#' @examples
+#' data_thresh <- sim_thresh()
+#' true_curve <-  function(x) {
+#'   D <- ifelse(x <= 0, 1, 0)
+#'   1.2 + 0.4 * x *D + 0.8 * x * (1-D)
+#' }
+#' out <- seglm_lm(formula = y~x, data = data_thresh, th_var_name = "x", nthresh =1)
+#' plot(y~x, data=data_thresh)
+#' curve(true_curve, add = TRUE)
+#' data_thresh$pred <- predict(out)
+#' data_thresh_ord <-  data_thresh[order(data_thresh$x),]
+#' lines(data_thresh_ord$x, data_thresh_ord$pred, col=2)
+#' legend("topleft", col = 1:2, legend = c("True curve", "estimated"), lty=1)
 #' @docType package
 NULL
 
