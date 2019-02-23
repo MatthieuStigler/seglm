@@ -15,17 +15,23 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## To do
 
+### BUGS
+
+
+
 ### Short term
 
+* `?seglm` returns general help?
 * correct mismatch grid/dynprog. DONE
 * push to github DONE
 * rename functions, needs consistency DONE
-* push to github DONE
 * dynprog for more than 2 nthresh!!
 * dynprog only return SSR if necessary!
 * clean utilities.R some not used anymore
 * add third method:  grid with recresid, much faster!
 * understand effect of ordering over threshold then use structural break techniques
+
+
 
 ### Further functionalities:
 
