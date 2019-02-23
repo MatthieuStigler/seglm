@@ -20,7 +20,7 @@
 seglm_search <- function(X, y, th_var, nthresh=1, trim=0.15, algorithm = c("grid", "dynprog"), ...){
   algorithm <-  match.arg(algorithm)
 
-  if(algorithm=="grid" & ntresh>2) stop("Algorithm `grid` works only for nthresh %in% 1,2")
+  if(algorithm=="grid" & nthresh>2) stop("Algorithm `grid` works only for nthresh %in% 1,2")
   if(algorithm=="grid") {
     res <- seglm_search_grid(X=X, y = y, nthresh = nthresh, th_var=th_var, trim=trim, ...)
   } else {
