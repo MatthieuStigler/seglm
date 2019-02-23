@@ -28,7 +28,9 @@ seglm_search_grid(X, y, th_var, nthresh = 1, trim = 0.15,
 
 \item{trim}{The minimum percentage of observations to keep in each regime.}
 
-\item{...}{Further argumetns passed to the underlying breakpoints function}
+\item{RSS.table}{Whether to return the RSS.table, contiaining the underlying RSS computations.}
+
+\item{...}{Further arguments passed to the underlying breakpoints function}
 
 \item{iter, max.iter, trace, return_details}{arguments to set the number of iterations, as well return_details}
 

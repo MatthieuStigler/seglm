@@ -3,7 +3,8 @@
 #' @param X matrix of regressors
 #' @param y matrix of the response
 #' @param th_var the threshold variable.
-#' @param ... Further argumetns passed to the underlying breakpoints function
+#' @param RSS.table Whether to return the RSS.table, contiaining the underlying RSS computations.
+#' @param ... Further arguments passed to the underlying breakpoints function
 #' @template param_nthresh
 #' @template param_trim
 #' @return An object of class "seglm_search" and "list"
