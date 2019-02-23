@@ -93,12 +93,3 @@ ggplot(aes(x=x, y = pred), data =d2) +
   geom_point(aes(y = y_observed, color = group))
 
 
-plt2 <- ggplot(data= d, aes(x = x)) +
-  geom_line(aes(y = y_ideal), linetype=2) +
-  geom_point(aes(y = y_observed, color = group)) +
-  geom_line(aes(y = group_mean, color = group)) +
-  ylab("y") +
-  ggtitle("RcppDynProg piecewise constant estimate",
-          subtitle = "dots: observed values, segments: observed group means, dashed line: unobserved true values") +
-  theme(legend.position = "none")
-
