@@ -24,7 +24,8 @@ seglm <- function(formula, data, th_var_name, nthresh = 1, ...){
     th_var_M <- matrix(seq_len(nrow(data)), ncol=1)
   } else {
     f_thVar <- formula(paste(" ~ -1 +", th_var_name))
-    th_var_M <- model.matrix(f_thVar, data = mf)
+    th_mf <- model.frame(f_thVar, data)
+    th_var_M <- model.matrix(f_thVar, data = th_mf)
   }
 
 
