@@ -15,16 +15,12 @@ This package computes segmented, also known as threshold regressions.
 }
 \examples{
 data_thresh <- sim_thresh()
-true_curve <-  function(x) {
-  D <- ifelse(x <= 0, 1, 0)
-  1.2 + 0.4 * x *D + 0.8 * x * (1-D)
-}
 out <- seglm_lm(formula = y~x, data = data_thresh, th_var_name = "x", nthresh =1)
-plot(y~x, data=data_thresh)
-curve(true_curve, add = TRUE)
 data_thresh$pred <- predict(out)
 data_thresh_ord <-  data_thresh[order(data_thresh$x),]
-lines(data_thresh_ord$x, data_thresh_ord$pred, col=2)
+plot(y~x, data=data_thresh)
+lines(y_true ~ x, data = data_thresh_ord, col=1)
+lines(pred ~ x, data=data_thresh_ord, col=2)
 legend("topleft", col = 1:2, legend = c("True curve", "estimated"), lty=1)
 }
 \author{

@@ -40,8 +40,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Further functions:
 
 * Add function `get_th_int()`: returns empirical intervals, for observed values?
-* `seglm_lm()` "workhorse" function. IN PROGRESS
-* add function `regime()` IN PROGRESS
+* `seglm_lm()` "workhorse" function. DONE
+* add function `regime()` DONE
 * `predict()`: option to feed raw data, transform then
 * broom/tidy implementation: 
     - `augment()`: add `regime()`?
@@ -51,9 +51,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Long term functionalitites to add:
 
-* shrinkage method for threshold
+* shrinkage method for threshold, see Chan et al (2015 JoE) LASSO estimation of threshold
 * bootstrap? look at new paradigms...
 * Linton Seo (look at `nls()` and partially linear LS literature ) 
 * Greb shrinkage stuff. 
 * Generalized grid search for `glm()`, or any. Look at Seo JASA paper!
 * datasets from Hansen 2000!? https://www.ssc.wisc.edu/~bhansen/progs/ecnmt_00.html
+
+
+### Paper
+
+* Implements Gonzalo Pitarakis MC (see Chan 2015)
+* Computes AIC, BIC, etc...
