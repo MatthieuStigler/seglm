@@ -44,7 +44,7 @@ seglm_fit <- function(X, y, th_var, nthresh = 1, th_val){
 coef.seglm_lm <-  function(x, by_reg = FALSE) {
   res <- x$coefficient
   if(by_reg) {
-    res <- matrix(res, ncol = x$nthresh+1)
+    res <- matrix(res, ncol = x$nthresh+1, byrow=TRUE)
     rownames(res) <- unique(gsub("^`|_L`?$|_M`?$|_H`?$|_seg[0-9]{1,2}`?$", "",  names(x$coefficient)))
     colnames(res) <-  paste("seg", 1:(x$nthresh+1), sep="")
   }

@@ -22,20 +22,20 @@ Type 'q()' to quit R.
 > set.seed(123)
 > data_thresh <- sim_thresh()
 > head(data_thresh)
-          y           x regime
-1 3.1746201 -0.56047565      1
-2 2.4203420 -0.23017749      1
-3 2.1818216  1.55870831      0
-4 1.7996008  0.07050839      0
-5 0.8890902  0.12928774      0
-6 2.0958051  1.71506499      0
+          y    y_true           x regime
+1 3.1746201 0.9758097 -0.56047565      1
+2 2.4203420 1.1079290 -0.23017749      1
+3 2.1818216 2.4469667  1.55870831      0
+4 1.7996008 1.2564067  0.07050839      0
+5 0.8890902 1.3034302  0.12928774      0
+6 2.0958051 2.5720520  1.71506499      0
 > f <-  y ~ x
 > 
-> out_1 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 1)
-> out_2 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 2)
-> # out_3 <- seglm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 3)
+> out_1 <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 1)
+> out_2 <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 2)
+> # out_3 <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = "x", nthresh = 3)
 > 
-> out_time <- seglm(formula = y ~ x, data=data_thresh, th_var_name = ".time", nthresh = 2)
+> out_time <- seglm_lm(formula = y ~ x, data=data_thresh, th_var_name = ".time", nthresh = 2)
 > 
 > 
 > ## together
@@ -46,20 +46,20 @@ Type 'q()' to quit R.
 > a <-  lapply(out_list, print)
 Coefs:
                seg1      seg2
-Intercept 1.3073176 0.3455491
-x         0.9241244 1.0886457
+Intercept 1.3073176 0.9241244
+x         0.3455491 1.0886457
 
 Threshold: -0.06191171 
 Coefs:
-               seg1      seg2     seg3
-Intercept 1.2645061 0.7284752 4.683075
-x         0.3072026 0.3066934 1.193261
+               seg1      seg2      seg3
+Intercept 1.2645061 0.3072026 0.7284752
+x         0.3066934 4.6830746 1.1932611
 
 Threshold: -0.03406725 0.4351815 
 Coefs:
-              seg1      seg2      seg3
-Intercept 1.389276 1.3566696 1.1867877
-x         1.477221 0.3585016 0.5918629
+               seg1     seg2      seg3
+Intercept 1.3892757 1.477221 1.3566696
+x         0.3585016 1.186788 0.5918629
 
 Threshold: 86 118 
 > lapply(out_list, coef)
