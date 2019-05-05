@@ -17,7 +17,7 @@ sim_thresh_2X(N = 200, th_val = 0, output = c("df", "matrix"))
 \item{output}{whether to return a \emph{data.frame} or \emph{matrix}}
 }
 \value{
-A data frame with columns \emph{y}, \emph{x1} and \emph{x2}
+A data frame with columns \emph{y}, \emph{y_true}, and various more \emph{x} columns
 }
 \description{
 Simulation of data for example

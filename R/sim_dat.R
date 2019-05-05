@@ -3,7 +3,7 @@
 #' @param N Size of sample to simulate
 #' @param output whether to return a *data.frame* or *matrix*
 #' @template param_th_val
-#' @return A data frame with columns *y*, *x1* and *x2*
+#' @return A data frame with columns *y*, *y_true*, and various more *x* columns
 #' @examples
 #' data_thresh <- sim_thresh()
 #' plot(y~x, data=data_thresh)
