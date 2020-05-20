@@ -8,14 +8,38 @@
 \alias{deviance.seglm_search}
 \title{Low level function to search the thresholds}
 \usage{
-seglm_search(X, y, th_var, nthresh = 1, trim = 0.15,
-  algorithm = c("grid", "dynprog"), ...)
+seglm_search(
+  X,
+  y,
+  th_var,
+  nthresh = 1,
+  trim = 0.15,
+  algorithm = c("grid", "dynprog"),
+  ...
+)
 
-seglm_search_dynprog(X, y, th_var, nthresh = 1, trim = 0.15,
-  RSS.table = FALSE, ...)
+seglm_search_dynprog(
+  X,
+  y,
+  th_var,
+  nthresh = 1,
+  trim = 0.15,
+  RSS.table = FALSE,
+  ...
+)
 
-seglm_search_grid(X, y, th_var, nthresh = 1, trim = 0.15,
-  iter = TRUE, trace = FALSE, max.iter = 3, return_details = FALSE)
+seglm_search_grid(
+  X,
+  y,
+  th_var,
+  nthresh = 1,
+  trim = 0.15,
+  n_points = NULL,
+  iter = TRUE,
+  trace = FALSE,
+  max.iter = 3,
+  return_details = FALSE
+)
 
 \method{print}{seglm_search}(x, ...)
 
@@ -37,6 +61,8 @@ seglm_search_grid(X, y, th_var, nthresh = 1, trim = 0.15,
 \item{...}{Further arguments passed to the underlying breakpoints function}
 
 \item{RSS.table}{Whether to return the RSS.table, contiaining the underlying RSS computations.}
+
+\item{n_points}{number of points in the grid. By default (NULL) takes all values, excluding the trimming.}
 
 \item{iter, max.iter, trace, return_details}{arguments to set the number of iterations, as well return_details}
 

@@ -129,12 +129,14 @@ seglm_search_dynprog <- function(X, y, th_var, nthresh=1, trim=0.15, RSS.table =
 
 #' @rdname seglm_search
 #' @param iter,max.iter,trace,return_details arguments to set the number of iterations, as well return_details
+#' @param n_points number of points in the grid. By default (NULL) takes all values, excluding the trimming.
 #' @export
 #' @import dplyr
 seglm_search_grid <- function(X, y, th_var, nthresh=1,
-                               trim=0.15,
-                               iter = TRUE, trace = FALSE, max.iter = 3,
-                               return_details = FALSE){
+                              trim=0.15,
+                              n_points = NULL,
+                              iter = TRUE, trace = FALSE, max.iter = 3,
+                              return_details = FALSE){
 
   thVar <-  as.vector(th_var)
   if(nthresh>2) stop("Works only for nthresh %in% 1,2")
@@ -142,15 +144,15 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
   ##
   N <- nrow(X)
   K <- ncol(X)
-  if( (N * (1-2*trim))/(nthresh+1) < K) warning ("N to small")
+  if( (N * (1-2*trim))/(nthresh+1) < K) warning ("N too small")
 
   y <- as.matrix(y)
 
-  # trim arg
+  # Various args trim arg
   thVar_s <- sort(unique(thVar))
   n_th <- length(thVar_s)
-
   n_min <-  if(trim <1)  ceiling(trim * N) else trim
+  n_grid <- if(is.null(n_points)) n_th else n_points # number of points to search over
 
 
   # down <- ceiling(trim*n_th)
@@ -169,6 +171,9 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
     SSR_XY(X_dat, y)
   }
 
+
+
+  ## funciton for conditional step
   condi_step <-  function(df, n_row_best = NULL, th_best = NULL) {
 
     if(is.null(n_row_best)) n_row_best <-  which.min(df$SSR)
@@ -185,7 +190,7 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
 
     df
 
-    for(i in 1:n_th) {
+    for(i in seq(1, n_th, length.out = n_grid)) {
       if(df[i, "step_2"]) {
 
         df[i, "SSR_2"] <-  SSR_1value(X=X, y=y, th_val = sort(c(th_best, df[i,]$thresh)),
@@ -203,7 +208,7 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
                        SSR = NA)
 
 
-  for(i in 1:n_th) {
+  for(i in seq(1, n_th, length.out = n_grid)) {
     if(SSR_df[i, "trim"]) {
       SSR_df[i, "SSR"] <-  SSR_1value(X=X, y=y, th_val = SSR_df[i,]$thresh, th_var = thVar, nthresh = 1)
     }
