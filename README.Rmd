@@ -22,23 +22,21 @@ When the threshold variable is time, the model reduces to the well-known structu
 
 ## Installation
 
-todo
 
 ``` r
-library(remotes)
-install_github("MatthieuStigler/seglm")
+devtools::install_github("MatthieuStigler/seglm")
 ```
 
 ## Example
 
-The main function is `seglm()`, which uses the standard formula - data style, and specific arguments `th_var_name` and `nthresh`, indicating wich is the threshold variable, as well as how many threshols/breaks are to be estimated. 
+The main function is `seglm()`, which uses the standard formula - data style, and specific arguments `th_var_name` and `nthresh`, indicating wich is the threshold variable, as well as how many thresholds/breaks are to be estimated. 
 
 ```{r}
 library(seglm)
 
 ## data randomly generated: true breakpoint is 0 
 data_thresh <- sim_thresh()
-seglm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
+seglm_lm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
 
 ```
 
