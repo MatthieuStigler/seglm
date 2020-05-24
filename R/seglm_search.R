@@ -142,6 +142,10 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
   if(nthresh>2) stop("Works only for nthresh %in% 1,2")
 
   ##
+  if(!is.matrix(X)){
+    X <- as.matrix(X)
+    warning("Converting X to matrix")
+  }
   N <- nrow(X)
   K <- ncol(X)
   if( (N * (1-2*trim))/(nthresh+1) < K) warning ("N too small")
