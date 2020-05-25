@@ -23,8 +23,11 @@ prep_Xany <-  function(X, th_val, th_var, nthresh = length(th_val),
 
   seg <- cut(th_var, breaks = c(-Inf, th_val, Inf),
              labels = 1:(nthresh +1))
-  XX <-  model.matrix( ~ 0+ . : seg,
-                       data = as.data.frame(X))
+  data <- as.data.frame(X)
+  if("seg"%in%colnames(data)) stop("data cannot contain reserved variable name `seg")
+  data$seg <- seg
+  XX <-  model.matrix( ~ 0+ . : seg, data = data)
+  XX <- XX[, -grep("^seg", colnames(XX))]
   if(clean_names) {
     colnames(XX) <- gsub(":seg", "_seg", colnames(XX))
     colnames(XX) <- gsub("`?\\(Intercept\\)`?_seg", "Intercept_seg", colnames(XX))
