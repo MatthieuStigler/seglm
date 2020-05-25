@@ -13,6 +13,11 @@ Methods specific to segmented regressions such as \code{\link{regime}}, \code{\l
 
 This package computes segmented, also known as threshold regressions.
 }
+\details{
+Install with:
+
+devtools::install_github("MatthieuStigler/seglm")
+}
 \examples{
 data_thresh <- sim_thresh()
 out <- seglm_lm(formula = y~x, data = data_thresh, th_var_name = "x", nthresh =1)
