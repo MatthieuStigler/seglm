@@ -1,8 +1,12 @@
 #' Simulation of data for example
 #'
+#'Simulates a dataset with one discontinuit) in x at value \code{th_val}. Function \code{sim_thresh_2X}
+#'does the same but with two thresholds.
 #' @param N Size of sample to simulate
 #' @param output whether to return a *data.frame* or *matrix*
 #' @template param_th_val
+#' @details This simulates a simple model such as: \deqn{1.2 + 0.4 * x1 *D + 0.8 * x1 * (1-D)}
+#' where D is an indicator function indicating whether values are below or above the threshold.
 #' @return A data frame with columns *y*, *y_true*, and various more *x* columns
 #' @examples
 #' data_thresh <- sim_thresh()

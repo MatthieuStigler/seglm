@@ -20,7 +20,12 @@ sim_thresh_2X(N = 200, th_val = 0, output = c("df", "matrix"))
 A data frame with columns \emph{y}, \emph{y_true}, and various more \emph{x} columns
 }
 \description{
-Simulation of data for example
+Simulates a dataset with one discontinuit) in x at value \code{th_val}. Function \code{sim_thresh_2X}
+does the same but with two thresholds.
+}
+\details{
+This simulates a simple model such as: \deqn{1.2 + 0.4 * x1 *D + 0.8 * x1 * (1-D)}
+where D is an indicator function indicating whether values are below or above the threshold.
 }
 \examples{
 data_thresh <- sim_thresh()
