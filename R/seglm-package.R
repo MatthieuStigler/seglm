@@ -4,11 +4,13 @@
 #' and return a modified \code{lm} object, with supplementary \code{seglm_lm} objects.
 #' Usual \code{lm} methods such as \code{coef},  \code{summary}, \code{deviance} can be used on the output.
 #' Methods specific to segmented regressions such as \code{\link{regime}}, \code{\link{get_th}} have also been implemented.
-#' @name seglm-package
-#' @examples
+#'
+#' Install with:
 #'
 #' devtools::install_github("MatthieuStigler/seglm")
 #'
+#' @name seglm-package
+#' @examples
 #' data_thresh <- sim_thresh()
 #' out <- seglm_lm(formula = y~x, data = data_thresh, th_var_name = "x", nthresh =1)
 #' data_thresh$pred <- predict(out)
