@@ -1,6 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<!-- badges: start -->
+
+[![Lifecycle:
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+<!-- badges: end -->
+
 # seglm
 
 The goal of seglm is to do a *segmented* regression. Segmented
@@ -31,14 +37,10 @@ library(seglm)
 ## data randomly generated: true breakpoint is 0 
 data_thresh <- sim_thresh()
 seglm_lm(formula = y~x, data = data_thresh, th_var = "x", nthresh =1)
-#> Warning in terms.formula(object, data = data): 'varlist' has changed (from
-#> nvar=2) to new 3 after EncodeVars() -- should no longer happen!
-#> Warning in terms.formula(formula, data = data): 'varlist' has changed (from
-#> nvar=2) to new 3 after EncodeVars() -- should no longer happen!
 #> Coefs:
-#>                seg1      seg2
-#> Intercept 1.3086500 1.0709725
-#> x         0.3865721 0.8003147
+#>                 seg1      seg2
+#> Intercept 0.71983097 1.4209476
+#> x         0.08262137 0.4669618
 #> 
-#> Threshold: -0.5909894
+#> Threshold: -0.6502997
 ```
