@@ -1,7 +1,7 @@
 #' @rdname seglm_search
 #' @export
 #' @import dplyr
-seglm_search_tree <- function(X, y, th_var, nthresh=1,
+seglm_search_restree <- function(X, y, th_var, nthresh=1,
                               trim=0.15){
 
   n_min <- round(length(y)*trim)
@@ -44,16 +44,16 @@ if(FALSE){
   y_inp <-  as.matrix(data_thresh[, "y"])
 
   ## 1 th
-  seglm:::seglm_search_tree(X=X_const, y=y_inp, th_var = X_inp)
+  seglm:::seglm_search_restree(X=X_const, y=y_inp, th_var = X_inp)
   seglm_search_grid(X=X_const, y=y_inp, th_var = X_inp)
 
   ## 2ths
-  seglm:::seglm_search_tree(X=X_const, y=y_inp, th_var = X_inp, nthresh=2)
+  seglm:::seglm_search_restree(X=X_const, y=y_inp, th_var = X_inp, nthresh=2)
   seglm_search_grid(X=X_const, y=y_inp, th_var = X_inp, nthresh = 2)
   seglm_search_dynprog(X=X_const, y=y_inp, th_var = X_inp, nthresh = 2)
 
   ## 4 ths
-  seglm_search_tree(X=X_const, y=y_inp, th_var = X_inp, nthresh=4)
+  seglm_search_restree(X=X_const, y=y_inp, th_var = X_inp, nthresh=4)
   seglm_search_dynprog(X=X_const, y=y_inp, th_var = X_inp, nthresh = 4)
 
   ## alter: residuals then grid
