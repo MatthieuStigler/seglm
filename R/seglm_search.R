@@ -177,7 +177,7 @@ seglm_search_grid <- function(X, y, th_var, nthresh=1,
 
 
 
-  ## funciton for conditional step
+  ## function for conditional step
   condi_step <-  function(df, n_row_best = NULL, th_best = NULL) {
 
     if(is.null(n_row_best)) n_row_best <-  which.min(df$SSR)

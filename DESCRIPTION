@@ -8,7 +8,11 @@ Authors@R:
            email = "Matthieu.Stigler@gmail.com")
 Description: This package computes segmented, also known as threshold regressions. 
 License: GPL-3
-Imports: stats, strucchange, dplyr
+Imports: 
+    stats,
+    strucchange,
+    dplyr,
+    rpart
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
