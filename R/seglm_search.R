@@ -17,14 +17,16 @@
 #' seglm_search_grid(X=X_inp, y=y_inp, th_var = X_inp)
 #' @export
 
-seglm_search <- function(X, y, th_var, nthresh=1, trim=0.15, algorithm = c("grid", "dynprog"), ...){
+seglm_search <- function(X, y, th_var, nthresh=1, trim=0.15, algorithm = c("grid", "dynprog", "restree"), ...){
   algorithm <-  match.arg(algorithm)
 
   if(algorithm=="grid" & nthresh>2) stop("Algorithm `grid` works only for nthresh %in% 1,2")
   if(algorithm=="grid") {
     res <- seglm_search_grid(X=X, y = y, nthresh = nthresh, th_var=th_var, trim=trim, ...)
-  } else {
+  } else if(algorithm=="dynprog"){
     res <- seglm_search_dynprog(X=X, y = y, nthresh = nthresh, th_var=th_var, trim=trim, ...)
+  } else if(algorithm=="restree"){
+    res <- seglm_search_restree(X=X, y = y, nthresh = nthresh, th_var=th_var, trim=trim, ...)
   }
   res
 }

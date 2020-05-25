@@ -6,7 +6,7 @@
 \alias{seglm_search_grid}
 \alias{print.seglm_search}
 \alias{deviance.seglm_search}
-\alias{seglm_search_tree}
+\alias{seglm_search_restree}
 \title{Low level function to search the thresholds}
 \usage{
 seglm_search(
@@ -15,7 +15,7 @@ seglm_search(
   th_var,
   nthresh = 1,
   trim = 0.15,
-  algorithm = c("grid", "dynprog"),
+  algorithm = c("grid", "dynprog", "restree"),
   ...
 )
 
@@ -46,7 +46,7 @@ seglm_search_grid(
 
 \method{deviance}{seglm_search}(object, ...)
 
-seglm_search_tree(X, y, th_var, nthresh = 1, trim = 0.15)
+seglm_search_restree(X, y, th_var, nthresh = 1, trim = 0.15)
 }
 \arguments{
 \item{X}{matrix of regressors}
