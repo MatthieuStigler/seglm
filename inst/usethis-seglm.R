@@ -6,7 +6,7 @@ library(usethis)
 
 
 use_package("rpart", "Imports")
-
+use_news_md()
 
 
 
