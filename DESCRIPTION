@@ -4,8 +4,9 @@ Version: 0.1.0.9000
 Authors@R: 
     person(given = "Matthieu",
            family = "Stigler",
-           role = c("aut", "cre"),
-           email = "Matthieu.Stigler@gmail.com")
+           role = c("aut", "cre", "cph"),
+           email = "Matthieu.Stigler@gmail.com",
+           comment =c(ORCID="0000-0002-6802-4290"))
 Description: This package computes segmented, also known as threshold regressions. 
 License: GPL-3
 Imports: 
